@@ -91,7 +91,7 @@ int main()
     }
     
 
-    cout << x << y << z;
+    cout << x << ' ' << y << ' ' << z << ' ' << '\n';
     cout << "hello world";
 
     return 0;
