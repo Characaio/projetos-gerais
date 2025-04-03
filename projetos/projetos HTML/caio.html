@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{border-radius: 10px;}
+        #topo{height: 170px; width: 40%; background-color: aquamarine; margin: auto;}
+        #meio{height: 80px; width: 45%; text-align: left; margin: auto; background-color:   burlywood;}
+        #não{height: 20px; width: 50%; text-align: center; margin-left: auto; background-color: chartreuse;}
+        #baixo{height: 30px; width: 35%; background-color: antiquewhite;}
+        div.input{
+            background-color: rgb(217, 217, 222);
+            width: 40%;
+            margin: 2px;
+            
+        }
+        div.extremos{
+            background-color:  rgb(131, 131, 213);
+             height: 100px; 
+             line-height: 100px;
+
+        }
+        div.mãe{font-size: 20px;
+             color: brown; text-align: center;
+             width: 50%; margin: auto;
+             border-radius: 8px; padding: 5px;
+        }
+        #ola{background: rgb(210, 205, 205);
+            height: 350px; line-height: 350px;}
+        
+    </style>
+</head>
+<body>
+    <div class="mãe">
+
+        <div class="extremos" >
+            topo
+        </div>
+
+        <div id = 'ola' >
+            conteudo
+        </div>
+
+        <div class="extremos" >
+            rodapé
+        </div>
+        
+    </div>
+    
+    <div id="topo">
+        oi
+        <div id = 'meio'>
+            ola
+            <div id='não'>
+                adeus
+            </div>
+        </div>
+        
+        <div id='baixo'>
+            nunca
+        </div>
+
+        <div class="input">
+            input
+        </div>
+
+        <div class="input">
+            input
+        </div>
+    </div>
+</body>
+</html>
