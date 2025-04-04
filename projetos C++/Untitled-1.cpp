@@ -37,8 +37,6 @@ int main()
     double altura;
     string nota;
     string nome;
-    char gatos;
-    char cachorros;
     // eu não sei QUE DESGRAÇA eu estou FAZENDO
     /*eu quero cometer
     um crime contra
@@ -62,33 +60,12 @@ int main()
     cin.ignore(); 
     getline(cin,nome);
 
-    cout << "você gosta de gatos?(responda com Y/N): \n";
-    cin >> gatos;
-
-    cout << "você gosta de cachorrors?(responda com Y/N): \n ";
-    cin >> cachorros;
-
     x = y = z = 5;
 
     cout << "im learning c++\n";
     cout << "meu nome é " << nome << ", tenho " << idade << "anos, tenho " << altura << " metros de atura, eu tirei nota " << nota << "\n";
     cout << "o tamanho do seu nome é de: " << nome.length() << "\n";
 
-    if (gatos == 'Y' && cachorros == 'Y'){
-        cout << "você gosta de cachorror e gatos";
-    } 
-
-    if (gatos == 'Y'){
-        cout << "você gosta de gatos \n";
-    } else{
-        cout << "você não gosta de gatos \n";
-    }
-
-    if (cachorros == 'Y'){
-        cout << "você gosta de cachorros \n";
-    } else{
-        cout << "você não gosta de cachorros \n";
-    }
     
 
     cout << x << ' ' << y << ' ' << z << ' ' << '\n';
