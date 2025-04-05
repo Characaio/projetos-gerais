@@ -1,5 +1,12 @@
 {
-    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+    "terminal.integrated.profiles.windows": {
+    "Git Bash": {
+        "path": "D:/_DevTools/GitPortable/bin/bash.exe"
+    }
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+
+    "C_Cpp.default.compilerPath": "D:/_PortableGit/bin/git.exe",
     "files.associations": {
         "*.tcc": "cpp",
         "iostream": "cpp",
