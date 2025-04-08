@@ -4,7 +4,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
-            "command": "D:/_DevTools/compilador_c++/mingw64/bin/g++.exe",
+            "command": "C:/Users/chara/_Vscode/_DevTools/compilador_c++/mingw64/bin/g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
@@ -13,7 +13,7 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
-                "cwd": "D:/_DevTools/compilador_c++/mingw64/bin"
+                "cwd": "C:/Users/chara/_Vscode/_DevTools/compilador_c++/mingw64/bin"
             },
             "problemMatcher": [
                 "$gcc"

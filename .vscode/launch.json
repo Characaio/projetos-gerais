@@ -5,14 +5,14 @@
             "name": "Compilar e Rodar (pendrive)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${fileDirname}//${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "D:/_DevTools/compilador_c++/mingw64/bin/gdb.exe",
+            "miDebuggerPath": "C:/Users/chara/_Vscode/_DevTools/compilador_c++/mingw64/bin/gdb.exe",
             "setupCommands": [
                 {
                     "description": "Habilita a formatação de impressão para gdb",
@@ -28,7 +28,7 @@
             "name": "Rodar JS com Node Portátil",
             "program": "${file}",
             "console": "integratedTerminal",
-            "runtimeExecutable": "D:/_DevTools/nodejs/node.exe"
+            "runtimeExecutable": "C:/Users/chara/_Vscode/_DevTools/nodejs/node.exe"
 			
         }
     ]

@@ -1,12 +1,12 @@
 {
     "terminal.integrated.profiles.windows": {
         "Git Bash": {
-            "path": "D:/_DevTools/GitPortable/bin/bash.exe"
+            "path": "C:/Users/chara/_Vscode/_PortableGit/bin/bash.exe"
         }
     },
     "terminal.integrated.defaultProfile.windows": "Git Bash",
 
-    "C_Cpp.default.compilerPath": "D:/_DevTools/compilador_c++/mingw64/bin/g++.exe",
+    "C_Cpp.default.compilerPath": "C:/Users/chara/_Vscode/_DevTools/compilador_c++/mingw64/bin/g++.exe",
     "files.associations": {
         "*.tcc": "cpp",
         "iostream": "cpp",
@@ -17,8 +17,8 @@
 
     // Code Runner configurado corretamente:
     "code-runner.executorMap": {
-        "cpp": "D:/_DevTools/compilador_c++/mingw64/bin/g++.exe $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe",
-        "javascript": "D:/_DevTools/nodejs/node.exe $fullFileName"
+        "cpp": "C:/Users/chara/_Vscode/_DevTools/compilador_c++/mingw64/bin/g++.exe $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe",
+        "javascript": "C:/Users/chara/_Vscode/_DevTools/nodejs/node.exe $fullFileName"
     },
     "code-runner.runInTerminal": true,
     "code-runner.clearPreviousOutput": true,
