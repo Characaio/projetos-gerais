@@ -18,7 +18,8 @@
     // Code Runner configurado corretamente:
     "code-runner.executorMap": {
         "cpp": "C:/Users/chara/_Vscode/_DevTools/compilador_c++/mingw64/bin/g++.exe $fileName -o $fileNameWithoutExt.exe && $fileNameWithoutExt.exe",
-        "javascript": "C:/Users/chara/_Vscode/_DevTools/nodejs/node.exe $fullFileName"
+        "javascript": "C:/Users/chara/_Vscode/_DevTools/nodejs/node.exe $fullFileName",
+        "html": ""
     },
     "code-runner.runInTerminal": true,
     "code-runner.clearPreviousOutput": true,
