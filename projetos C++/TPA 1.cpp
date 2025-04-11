@@ -29,7 +29,20 @@ int buffet(){
     cout << "o total a ser pago por todos é de " << total << " reais \n";
     return 0;
 }
-
+int radar(){
+    int tamanho = 10;
+    int velocidades[tamanho] = {10,15,45,70,87,45,67,87,96,23};
+    for (int i = 0; i < (tamanho-1); i++){
+        cout << "sua velocidade é de: " << velocidades[i] << ", você";
+        if (velocidades[i] > 60)
+        {
+           cout << " passou do limite de velocidade, tu vai morrer seu corno,/corna \n";
+        } else{
+            cout << " ta dboa mn, rlxxxxx \n";
+        }
+        
+    }
+}
 
 int main()
 {
@@ -42,7 +55,7 @@ int main()
             buffet();
         } else if (i == 2)
         {
-            cout << "hii \n";
+            radar();
         } else if (i == 3)
         {
             cout << "hiii \n";

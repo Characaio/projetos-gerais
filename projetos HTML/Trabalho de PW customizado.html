@@ -1,0 +1,95 @@
+
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+   <style>
+    #primeiro{
+        
+        width: 25%;
+    }
+    #segundo{
+        
+        width: 30%;
+    }
+    #terceiro{
+        
+        width: 25%;
+    }
+    #quarto{
+        
+        width: 25%;
+    }
+    #quinto{
+        
+        width: 25%;
+    }
+    #entrada{
+        background-color: rgb(235, 236, 239);
+        border-radius: 6px;
+        border-width: 1px;
+    }
+   </style>
+    
+</head>
+<body>
+    <div>
+        <form action="/enviar" method="POST">
+            <div>
+                <div id="primeiro"><label> Nome: <br> <input class="texto" id="entrada" type="text" placeholder="Coloque seu nome"></label><br></div>
+                <div id="segundo"><label> Sexo <input type="radio">Masculino <input type="radio" id="entrada" >Feminino</label><br></div>
+                <div id="terceiro"><label> idade <br> <input type="text" placeholder="Coloque sua idade" id="entrada" ></label><br></div>
+                <div id="quarto"><label> Telefone <br> <input type="text" placeholder="DD xxxxx-xxxx" id="entrada" ></label><br></div>
+                <div id="quinto"><label> Email <br> <input type="email" placeholder="SeuEmail@gmail.com" id="entrada" ></label><br><br></div>
+            </div>
+
+            <fieldset>
+                <legend>Endereço</legend>
+                <label>Logradouro <br> <input type="text" id="entrada" ></label> <br>
+                <label>Número <br> <input type="text" id="entrada" ></label> <br>
+                <label>Cidade <br> <input type="text" id="entrada" ></label> <br><br>
+                <label> UF:
+                    <select name="estados" id="entrada" >
+                    <option value="selecione">selecione</option>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapa</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceara</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espirito Santo</option>
+                    <option value="GO">Goias</option>
+                    <option value="MA">Maranhã</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Para</option>
+                    <option value="PB">Paraiba</option>
+                    <option value="PR">Parana</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piaui</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Roraima</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                    </select> 
+                </label>
+
+            </fieldset>
+            <label> Periodo: <input type="radio"> manhã  <input type="radio"> tarde <input type="radio"> noite</label><br><br>
+            <label> Deixe-nos uma mensagem <br> <textarea cols="70"  rows="10" id="entrada">  </textarea></label><br><br>
+            <label> Senha: <input type="password" id="entrada" ></label>
+        </form>
+    </div>
+</body>
+</html>

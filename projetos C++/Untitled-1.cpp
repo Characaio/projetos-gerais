@@ -42,7 +42,10 @@ int main()
     um crime contra
     uma creche
     e eu não vou me arrepender*/
+    
+    char oi[] = "isabela";
 
+    cout << oi << "\n";
     cout << "coloque sua idade: \n";
     cin >> idade;
 
