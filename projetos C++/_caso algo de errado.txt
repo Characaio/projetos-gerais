@@ -1,0 +1,6 @@
+Se algo der errado, você precisa primeiro:
+
+- verificar se o caminho esta certo, isso pode variar por maquina, algumas são D, outras E, outras F, ai vc muda nos 3 arquivos, launch.json, tasks.json, settings.json
+- se isso der errado, verifique se tudo esta instalado certo
+- se estver dando um erro relaacionado ao GDB, crie um novo arquivo e coloque o mesmo codigo la
+- se ainda tiver dando errado, você tem que chorar, pq eu nn sei oq fazer sem ta ai né GENIO, NÉ CAIO, IDIOTA

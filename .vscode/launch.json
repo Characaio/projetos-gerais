@@ -21,6 +21,15 @@
                 }
             ],
             "preLaunchTask": "C/C++: g++.exe build active file"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Rodar JS com Node Portátil",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "runtimeExecutable": "D:/_DevTools/nodejs/node.exe"
+			
         }
     ]
 }
