@@ -1,0 +1,12 @@
+# Ignorar executáveis e arquivos de build
+*.exe
+*.o
+*.out
+*.obj
+build/
+
+# Ignorar configs do VS Code
+.vscode/
+
+# Ignorar arquivos JSON (se forem configs locais)
+*.json
