@@ -30,9 +30,9 @@ int buffet(){
     return 0;
 }
 int radar(){
-    int tamanho = 10;
+    const int tamanho = 10;
     int velocidades[tamanho] = {10,15,45,70,87,45,67,87,96,23};
-    for (int i = 0; i < (tamanho-1); i++){
+    for (int i = 0; i <= (tamanho-1); i++){
         cout << "sua velocidade é de: " << velocidades[i] << ", você";
         if (velocidades[i] > 60)
         {
