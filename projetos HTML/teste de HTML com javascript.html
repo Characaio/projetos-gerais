@@ -19,6 +19,45 @@
       animation: sair 2s ease-in-out forwards;
     }
     
+
+    .bola{
+      position: relative;
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      transform: rotate(45deg);
+      margin: 60px auto;
+      animation: girar 4s ease-in-out forwards;
+      animation-iteration-count: infinite;
+      animation-delay: 0ms;
+    }
+
+    .bola::before,.bola::after{
+      border-radius: 50%;
+      background-color: red;
+      position: absolute;
+      width: 100px;
+      height: 100px;
+     
+    }
+    .bola::after{
+      content: " ";
+      top: -55px;
+      left: 0px;
+      
+    }
+    .bola::before{
+      content: " ";
+      top: 0;
+      right: 55px;
+      
+    }
+    
+    @keyframes girar{
+      from{transform: rotate(45deg);}
+      
+      to{transform: rotate(405deg);}
+    }
     @keyframes sair{
       from{margin-left: 5%;}
       to{margin-left: 110%;}
@@ -31,8 +70,11 @@
     
     
     </style>
+    
 </head>
+
 <body>
+  <h1>oiiiiiii</h1>
   <p id="socorro" style="width: 25%;">isso é um paragrafo</p>
   <button onclick="azul()">azul</button>
   <button onclick="amarelo()">amarelo</button>
@@ -43,180 +85,37 @@
   <br><br>
   <button id="login" >login</button>
   <br><br>
-
-  <div id="diva" style="background-color: antiquewhite; border: 2px solid black">
-    <div>
-      <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br><br>
-      <label> 
-          <input type="radio" name = "sexo" value="masculino" required> masculino
-          <input type="radio" name = "sexo" value="feminino" required> feminino
-      </label>
-      <label> idade <br> <input type="text" name="idade" required></label><br>
-      <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br><br>
-      <label> Email <br> <input type="email" name="email" required></label>
-      </div>
-      
-      <div>
-        <button id="deslog">sair</button>
-        <button id="proximo"> proximo</button>
-      </div>
-  </div>
-
   <div>
+    <div class="bola" id="circulo" >
+        <button>oi</button>
+    </div>
+    
+  </div>
+ 
+    <div id="diva" style="background-color: antiquewhite; border: 2px solid black">
+      <form id="formulario">
+      <div>
+        <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br>
+        <label> 
+            <input type="radio" name = "sexo" value="masculino" required> masculino
+            <input type="radio" name = "sexo" value="feminino" required> feminino
+        </label><br>
+        <label> idade <br> <input type="text" name="idade" required></label><br>
+        <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br>
+        <label> Email <br> <input type="email" name="email" required></label>
+        </div>
+      </form>
+        <div>
+          <button id="deslog">sair</button>
+          <button id="proximo"> proximo</button>
+        </div>
     
   </div>
 
+  <script src="C:\Users\chara\OneDrive\Documentos\_projetos-gerais\projetos javasscript\oriundos_de_teste_de_HTML_com_javascript\formulario.js"></script>
+  <script src="C:\Users\chara\OneDrive\Documentos\_projetos-gerais\projetos javasscript\oriundos_de_teste_de_HTML_com_javascript\botões_cores.js"></script>
   <script>
-    const login = document.getElementById("login")
-    const diva = document.getElementById("diva")
-    let finalizado = false
-    let escondido = false
-    let proximos = 0
-    
-    login.addEventListener('click', () =>{
-      if (escondido){
-        diva.classList.remove('sair');
-        escondido = false
-        }
-        diva.classList.add('entra');
-    });
 
-    diva.addEventListener('click', (e) =>{
-      id = e.target.id;
-      
-      if (id === "proximo"){
-        if (proximos === 0){
-          proximos = 1
-          console.log('indo pro segundo log',proximos)
-          diva.innerHTML = `
-              <fieldset>
-                  <legend>Endereço</legend>
-                  <label>rua <br> <input type="text" name="rua" required></label> <br>
-                  <label>Número da casa<br> <input type="text" name="numero" required></label> <br>
-                  <label>Cidade <br> <input type="text" name="cidade" required></label> <br>
-                  <label> UF:
-                      <select name="estados" name="estado" required>
-                      <option value="selecione">selecione</option>
-                      <option value="AC">acre</option>
-                      <option value="BA">acre</option>
-                      <option value="CE">acre</option>
-                      </select> 
-                  </label>
-                  <button id="voltar"> anterior </button>
-                  <button id="proximo"> proximo</button>
-              </fieldset>`;
-            
-          } else if (proximos === 1){
-            console.log("indo pro terceiro log", proximos)
-            proximos = 2
-            diva.innerHTML = `
-            
-            <label> Periodo: 
-                <input type="radio" name="periodo" value="manhã" required> manhã  
-                <input type="radio" name="periodo" value="tarde" required> tarde 
-                <input type="radio" name="periodo" value="noite" required> noite
-            </label><br><br>
-            <label> Deixe-nos uma mensagem <br> <textarea name="mensagem" cols="70"  rows="10">  </textarea></label><br><br>
-            <label> Senha: <input type="password" name="senha" required></label>
-            <button id="voltar"> anterior </button>
-            <button id="finalizar"> finalizar </button>
-            
-            `
-          }
-      }
-
-
-
-    if (id == "voltar"){
-      if (proximos === 1){
-        console.log("voltando pro primeiro log", proximos)
-          proximos = 0;
-          diva.innerHTML = `
-          <div>
-          <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br><br>
-          <label> 
-              <input type="radio" name = "sexo" value="masculino" required> masculino
-              <input type="radio" name = "sexo" value="feminino" required> feminino
-          </label>
-          <label> idade <br> <input type="text" name="idade" required></label><br>
-          <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br><br>
-          <label> Email <br> <input type="email" name="email" required></label>
-          </div>
-          
-          <div>
-            <button id="deslog">sair</button>
-            <button id="proximo"> proximo</button>
-          </div>
-          `
-          }
-      if (proximos === 2){
-        console.log("voltando pro segundo log", proximos)
-        proximos = 1 
-        diva.innerHTML = `
-        <fieldset>
-                <legend>Endereço</legend>
-                <label>rua <br> <input type="text" name="rua" required></label> <br>
-                <label>Número da casa<br> <input type="text" name="numero" required></label> <br>
-                <label>Cidade <br> <input type="text" name="cidade" required></label> <br>
-                <label> UF:
-                    <select name="estados" name="estado" required>
-                    <option value="selecione">selecione</option>
-                    <option value="AC">acre</option>
-                    <option value="BA">acre</option>
-                    <option value="CE">acre</option>
-                    </select> 
-                </label>
-                <button id="voltar"> anterior </button>
-                <button id="proximo"> proximo</button>
-            </fieldset>
-          `
-          
-        }
-      }
-      if (id === "deslog"){
-        esconder()
-        
-        
-      }
-      if (id === "finalizar"){
-        console.log('finalizado')
-        esconder()
-        
-      }
-    }
-  )
-
-    function esconder(){
-      if (!escondido){
-          diva.classList.remove('entra')
-          escondido = true
-        }
-      diva.classList.add('sair')
-    }
-    function azul() {
-      socorro.style.backgroundColor = "blue"
-      socorro.style.color = "black"
-    }
-    function amarelo() {
-      socorro.style.backgroundColor = "yellow"
-      socorro.style.color = "black"
-    }
-    function preto() {
-      socorro.style.backgroundColor = "black"
-      socorro.style.color = "white"
-    }
-    function verde() {
-      socorro.style.backgroundColor = "green"
-      socorro.style.color = "white"
-    }
-    function roxo() {
-      socorro.style.backgroundColor = "purple"
-      socorro.style.color = "white"
-    }
-    function rosa() {
-      socorro.style.backgroundColor = "pink"
-      socorro.style.color = "black"
-    }
   </script>
 </body>
 </html>
