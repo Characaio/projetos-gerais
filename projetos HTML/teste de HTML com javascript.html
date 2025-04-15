@@ -1,61 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deslizando</title>
+  <style>
+    #diva {
+      width: 40%;
+      margin-left: 110%;
+      position: fixed;
+      z-index: 10;
+    }
+
+    .entra{
+      animation: entrar 2s ease-in-out forwards;
+    }
+    .sair{
+      animation: sair 2s ease-in-out forwards;
+    }
+    
+    @keyframes sair{
+      from{margin-left: 5%;}
+      to{margin-left: 110%;}
+    }
+    
+    @keyframes entrar {
+      from{margin-left: 110%;}
+      to{margin-left: 5%;}
+    }
+    
+    
+    </style>
 </head>
 <body>
+  <p id="socorro" style="width: 25%;">isso é um paragrafo</p>
+  <button onclick="azul()">azul</button>
+  <button onclick="amarelo()">amarelo</button>
+  <button onclick="preto()">preto</button>
+  <button onclick="verde()">verde</button>
+  <button onclick="roxo()">roxo</button>
+  <button onclick="rosa()">rosa</button>
+  <br><br>
+  <button id="login" >login</button>
+  <br><br>
+
+  <div id="diva" style="background-color: antiquewhite; border: 2px solid black">
+    <div>
+      <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br><br>
+      <label> 
+          <input type="radio" name = "sexo" value="masculino" required> masculino
+          <input type="radio" name = "sexo" value="feminino" required> feminino
+      </label>
+      <label> idade <br> <input type="text" name="idade" required></label><br>
+      <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br><br>
+      <label> Email <br> <input type="email" name="email" required></label>
+      </div>
+      
+      <div>
+        <button id="deslog">sair</button>
+        <button id="proximo"> proximo</button>
+      </div>
+  </div>
+
+  <div>
     
-    <p id="socorro" style="width: 25%;">isso é um paragrafo</p>
-    <button type="button" onclick="azul()">azul</button>
-    <button type="button" onclick="amarelo()">amarelo</button>
-    <button type="button" onclick="preto()">preto</button>
-    <button type="button" onclick="verde()">verde</button>
-    <button type="button" onclick="roxo()">roxo</button>
-    <button type="button" onclick="rosa()">rosa</button>
+  </div>
 
-    <div id="diva">
-        <p> oi </p>
-        <p> ola </p>
-        <p> não</p>
-        <p> sim</p>
-    </div>
-    <button type="button" onclick="direita()">direita</button>
-    <button type="button" onclick="esquerda()">esquerda</button>
-    <script>
-        function direita(){
-            document.getElementsById("diva").style.
+  <script>
+    const login = document.getElementById("login")
+    const diva = document.getElementById("diva")
+    let finalizado = false
+    let escondido = false
+    let proximos = 0
+    
+    login.addEventListener('click', () =>{
+      if (escondido){
+        diva.classList.remove('sair');
+        escondido = false
         }
-        function azul(){
-            document.getElementById("socorro").style.backgroundColor = "blue"
-            document.getElementById("socorro").style.color = "black"
-        }
-        function amarelo(){
-            document.getElementById("socorro").style.backgroundColor = "yellow"
-            document.getElementById("socorro").style.color = "black"
+        diva.classList.add('entra');
+    });
 
-        }
-        function preto(){
-            document.getElementById("socorro").style.backgroundColor = "black"
-            document.getElementById("socorro").style.color = "white"
-        }
-        function verde(){
-            document.getElementById("socorro").style.backgroundColor = "green"
-            document.getElementById("socorro").style.color = "white"
+    diva.addEventListener('click', (e) =>{
+      id = e.target.id;
+      
+      if (id === "proximo"){
+        if (proximos === 0){
+          proximos = 1
+          console.log('indo pro segundo log',proximos)
+          diva.innerHTML = `
+              <fieldset>
+                  <legend>Endereço</legend>
+                  <label>rua <br> <input type="text" name="rua" required></label> <br>
+                  <label>Número da casa<br> <input type="text" name="numero" required></label> <br>
+                  <label>Cidade <br> <input type="text" name="cidade" required></label> <br>
+                  <label> UF:
+                      <select name="estados" name="estado" required>
+                      <option value="selecione">selecione</option>
+                      <option value="AC">acre</option>
+                      <option value="BA">acre</option>
+                      <option value="CE">acre</option>
+                      </select> 
+                  </label>
+                  <button id="voltar"> anterior </button>
+                  <button id="proximo"> proximo</button>
+              </fieldset>`;
+            
+          } else if (proximos === 1){
+            console.log("indo pro terceiro log", proximos)
+            proximos = 2
+            diva.innerHTML = `
+            
+            <label> Periodo: 
+                <input type="radio" name="periodo" value="manhã" required> manhã  
+                <input type="radio" name="periodo" value="tarde" required> tarde 
+                <input type="radio" name="periodo" value="noite" required> noite
+            </label><br><br>
+            <label> Deixe-nos uma mensagem <br> <textarea name="mensagem" cols="70"  rows="10">  </textarea></label><br><br>
+            <label> Senha: <input type="password" name="senha" required></label>
+            <button id="voltar"> anterior </button>
+            <button id="finalizar"> finalizar </button>
+            
+            `
+          }
+      }
 
-        }
-        function roxo(){
-            document.getElementById("socorro").style.backgroundColor = "purple"
-            document.getElementById("socorro").style.color = "white"
 
-        }
-        function rosa(){
-            document.getElementById("socorro").style.backgroundColor = "pink"
-            document.getElementById("socorro").style.color = "black"
 
+    if (id == "voltar"){
+      if (proximos === 1){
+        console.log("voltando pro primeiro log", proximos)
+          proximos = 0;
+          diva.innerHTML = `
+          <div>
+          <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br><br>
+          <label> 
+              <input type="radio" name = "sexo" value="masculino" required> masculino
+              <input type="radio" name = "sexo" value="feminino" required> feminino
+          </label>
+          <label> idade <br> <input type="text" name="idade" required></label><br>
+          <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br><br>
+          <label> Email <br> <input type="email" name="email" required></label>
+          </div>
+          
+          <div>
+            <button id="deslog">sair</button>
+            <button id="proximo"> proximo</button>
+          </div>
+          `
+          }
+      if (proximos === 2){
+        console.log("voltando pro segundo log", proximos)
+        proximos = 1 
+        diva.innerHTML = `
+        <fieldset>
+                <legend>Endereço</legend>
+                <label>rua <br> <input type="text" name="rua" required></label> <br>
+                <label>Número da casa<br> <input type="text" name="numero" required></label> <br>
+                <label>Cidade <br> <input type="text" name="cidade" required></label> <br>
+                <label> UF:
+                    <select name="estados" name="estado" required>
+                    <option value="selecione">selecione</option>
+                    <option value="AC">acre</option>
+                    <option value="BA">acre</option>
+                    <option value="CE">acre</option>
+                    </select> 
+                </label>
+                <button id="voltar"> anterior </button>
+                <button id="proximo"> proximo</button>
+            </fieldset>
+          `
+          
         }
-    </script>
+      }
+      if (id === "deslog"){
+        esconder()
+        
+        
+      }
+      if (id === "finalizar"){
+        console.log('finalizado')
+        esconder()
+        
+      }
+    }
+  )
 
+    function esconder(){
+      if (!escondido){
+          diva.classList.remove('entra')
+          escondido = true
+        }
+      diva.classList.add('sair')
+    }
+    function azul() {
+      socorro.style.backgroundColor = "blue"
+      socorro.style.color = "black"
+    }
+    function amarelo() {
+      socorro.style.backgroundColor = "yellow"
+      socorro.style.color = "black"
+    }
+    function preto() {
+      socorro.style.backgroundColor = "black"
+      socorro.style.color = "white"
+    }
+    function verde() {
+      socorro.style.backgroundColor = "green"
+      socorro.style.color = "white"
+    }
+    function roxo() {
+      socorro.style.backgroundColor = "purple"
+      socorro.style.color = "white"
+    }
+    function rosa() {
+      socorro.style.backgroundColor = "pink"
+      socorro.style.color = "black"
+    }
+  </script>
 </body>
 </html>
