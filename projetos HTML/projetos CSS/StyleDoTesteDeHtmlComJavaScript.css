@@ -1,0 +1,39 @@
+#diva {
+    width: 40%;
+    margin-left: 110%;
+    position: fixed;
+    z-index: 10;
+  }
+  #header{
+    display: flex;
+    background-color: azure;
+    height: 22px;
+  }
+
+
+
+  .entra{
+    animation: entrar 2s ease-in-out forwards;
+  }
+  .sair{
+    animation: sair 2s ease-in-out forwards;
+  }
+
+  
+  
+  @keyframes girar{
+    from{transform: rotate(45deg);}
+    
+    to{transform: rotate(405deg);}
+  }
+  @keyframes sair{
+    from{margin-left: 5%;}
+    to{margin-left: 110%;}
+  }
+  
+  @keyframes entrar {
+    from{margin-left: 110%;}
+    to{margin-left: 5%;}
+  }
+  
+  

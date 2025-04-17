@@ -4,91 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Deslizando</title>
-  <style>
-    #diva {
-      width: 40%;
-      margin-left: 110%;
-      position: fixed;
-      z-index: 10;
-    }
-
-    .entra{
-      animation: entrar 2s ease-in-out forwards;
-    }
-    .sair{
-      animation: sair 2s ease-in-out forwards;
-    }
-    
-
-    .bola{
-      position: relative;
-      width: 100px;
-      height: 100px;
-      background-color: red;
-      transform: rotate(45deg);
-      margin: 60px auto;
-      animation: girar 4s ease-in-out forwards;
-      animation-iteration-count: infinite;
-      animation-delay: 0ms;
-    }
-
-    .bola::before,.bola::after{
-      border-radius: 50%;
-      background-color: red;
-      position: absolute;
-      width: 100px;
-      height: 100px;
-     
-    }
-    .bola::after{
-      content: " ";
-      top: -55px;
-      left: 0px;
-      
-    }
-    .bola::before{
-      content: " ";
-      top: 0;
-      right: 55px;
-      
-    }
-    
-    @keyframes girar{
-      from{transform: rotate(45deg);}
-      
-      to{transform: rotate(405deg);}
-    }
-    @keyframes sair{
-      from{margin-left: 5%;}
-      to{margin-left: 110%;}
-    }
-    
-    @keyframes entrar {
-      from{margin-left: 110%;}
-      to{margin-left: 5%;}
-    }
-    
-    
-    </style>
+  <link rel="stylesheet" href="C:\Users\chara\OneDrive\Documentos\_projetos-gerais\projetos HTML\projetos CSS\StyleDoTesteDeHtmlComJavaScript.css">
     
 </head>
 
-<body>
+<body style="background-color: rgb(241, 240, 255);">
+  <header id="header">
+    <button onclick="azul()">azul</button>
+    <button onclick="amarelo()">amarelo</button>
+    <button onclick="preto()">preto</button>
+    <button onclick="verde()">verde</button>
+    <button onclick="roxo()">roxo</button>
+    <button onclick="rosa()">rosa</button>
+    <button id="login" style="margin-left: 50%;">login</button>
+  </header>
   <h1>oiiiiiii</h1>
-  <p id="socorro" style="width: 25%;">isso é um paragrafo</p>
-  <button onclick="azul()">azul</button>
-  <button onclick="amarelo()">amarelo</button>
-  <button onclick="preto()">preto</button>
-  <button onclick="verde()">verde</button>
-  <button onclick="roxo()">roxo</button>
-  <button onclick="rosa()">rosa</button>
-  <br><br>
-  <button id="login" >login</button>
-  <br><br>
+  <p id="socorro" >isso é um paragrafo</p>
   <div>
-    <div class="bola" id="circulo" >
-        <button>oi</button>
-    </div>
+    
     
   </div>
  
@@ -112,8 +45,9 @@
     
   </div>
 
-  <script src="C:\Users\chara\OneDrive\Documentos\_projetos-gerais\projetos javasscript\oriundos_de_teste_de_HTML_com_javascript\formulario.js"></script>
-  <script src="C:\Users\chara\OneDrive\Documentos\_projetos-gerais\projetos javasscript\oriundos_de_teste_de_HTML_com_javascript\botões_cores.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Characaio/projetos-gerais@abd9951e44ae19e1e245124088746e5fa8311846/projetos%20javasscript/oriundos_de_teste_de_HTML_com_javascript/bot%C3%B5es_cores.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Characaio/projetos-gerais@abd9951e44ae19e1e245124088746e5fa8311846/projetos%20javasscript/oriundos_de_teste_de_HTML_com_javascript/formulario.js"></script>
+
   <script>
 
   </script>
