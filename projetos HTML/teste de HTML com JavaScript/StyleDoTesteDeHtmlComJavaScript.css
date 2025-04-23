@@ -3,14 +3,33 @@
     margin-left: 110%;
     position: fixed;
     z-index: 10;
+    background-color: antiquewhite;
+     border: 2px solid black
   }
   #header{
     display: flex;
     background-color: azure;
     height: 22px;
+    margin: auto;
+    padding: 10px;
+  }
+ 
+  body{
+    background-color: rgb(241, 240, 255);
   }
 
+  #login{
+    justify-content: right
+   ;
+  }
 
+  button{
+    background-color: rgb(239, 235, 243);
+    border-radius: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  
 
   .entra{
     animation: entrar 2s ease-in-out forwards;

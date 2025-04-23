@@ -1,0 +1,38 @@
+.container{
+    max-width: 50vh;
+    width: 50%;
+    
+    
+}
+.row{
+    display: flex;
+    
+    background-color: antiquewhite;
+    
+}
+
+.display{
+    background-color: rgb(110, 120, 124);
+    height: 12vh;
+}
+
+#current{
+    font-size: 20px;
+    padding-right: 10px;
+    padding-top: 5vh;
+    text-align: end;
+    color: white
+}
+#expression{
+    color: rgb(168, 168, 177);
+    line-height: 5vh;
+    font-size: 10px;
+}
+
+.buttons{
+    border-radius: 10px;
+    margin: 2px;
+    width: 20%;
+    height: 7vh;
+    background-color: azure;
+}

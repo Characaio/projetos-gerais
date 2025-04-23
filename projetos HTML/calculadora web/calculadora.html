@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CalculadoraEstilo.css">
+</head>
+<body>
+    <div class="container">
+        
+        <div class="display">
+            <div id="current">
+                Placeholder2
+            </div>
+        </div>
+
+        <div class="row">
+            <button class="buttons" onclick="help('%')">%</button>
+            <button class="buttons" onclick="help('CE')">CE</button>
+            <button class="buttons" onclick="help('C')">C</button>
+            <button class="buttons" onclick="help('delete')">delete</button>
+        </div>
+        <div class="row">
+            <button class="buttons" onclick="help('1/x')">1/x</button>
+            <button class="buttons" onclick="help('x²')">x²</button>
+            <button class="buttons" onclick="help('sqrt(x)')">sqrt(x)</button>
+            <button class="buttons" onclick="help('/')">/</button>
+        </div>
+        <div class="row">
+            <button class="buttons" onclick="help('7')">7</button>
+            <button class="buttons" onclick="help('8')">8</button>
+            <button class="buttons" onclick="help('9')">9</button>
+            <button class="buttons" onclick="help('*')">*</button>
+        </div>
+        <div class="row">
+            <button class="buttons" onclick="help('4')">4</button>
+            <button class="buttons" onclick="help('5')">5</button>
+            <button class="buttons" onclick="help('6')">6</button>
+            <button class="buttons" onclick="help('-')">-</button>
+        </div>
+        <div class="row">
+            <button class="buttons" onclick="help('1')">1</button>
+            <button class="buttons" onclick="help('2')">2</button>
+            <button class="buttons" onclick="help('3')">3</button>
+            <button class="buttons" onclick="help('+')">+</button>
+        </div>
+        <div class="row">
+            <button class="buttons" onclick="help('negate')">negate</button>
+            <button class="buttons" onclick="help('0')">0</button>
+            <button class="buttons" onclick="help(',')">,</button>
+            <button class="buttons" onclick="help('=')">=</button>
+            
+        </div>
+    </div>
+
+    <script>
+        const nums = ['1','2','3','4','5','6','7','8','9',]
+        const operator = ['+','-','*','/','=','negate']
+        const special = ['1/x', '.', 'x²','squrt(x)','%','CE','C','delete']
+        let expression = ''
+        let lastnum = ''
+        let first = ''
+        let second = ''
+        let ope = false
+        let temp = ''
+        let master = ''
+        let operans = ''
+        const display = document.getElementById('display')
+        const current = document.getElementById('current')
+        const express = document.getElementById('expression')
+        
+        function result(){
+            let operands = ''
+            let result = 0
+            let expressions = []
+            
+            first = ''
+            console.log('hi')
+            console.log(expression)
+            console.log(expression.length)
+            
+            result = expression.split(operand)
+            num1 = result[0]
+            num2 = result[1]
+            console.log('num1', num1)
+            console.log('num2', num2)
+            console.log('tipo do 1', typeof(num1), num1)
+            console.log('tipo do 2', typeof(num2), num2)
+            
+                
+            if (expression.includes("+")){
+                first = Number(num1)+Number(num2)
+                console.log('tipo do first antes', typeof(first),first)
+                first = String(first)
+                console.log('tipo do first depois', typeof(first),first)
+                
+                console.log('soma')
+                console.log('tipo da temp', typeof(temp),temp)
+                console.log('tipo da expres', typeof(expression),expression)
+                
+            }
+            if (expression.includes("-")){
+                first = Number(num1)-Number(num2)
+                console.log('tipo do first antes', typeof(first),first)
+                first = String(first)
+                console.log('tipo do first depois', typeof(first),first)
+                
+                console.log('subtração')
+                console.log('tipo da temp', typeof(temp),temp)
+                console.log('tipo da expres', typeof(expression),expression)
+                
+            }
+            if (expression.includes("*")){
+                first = Number(num1)*Number(num2)
+                console.log('tipo do first antes', typeof(first),first)
+                first = String(first)
+                console.log('tipo do first depois', typeof(first),first)
+                
+                console.log('multiplicação')
+                console.log('tipo da temp', typeof(temp),temp)
+                console.log('tipo da expres', typeof(expression),expression)
+                
+            }
+            if (expression.includes("/")){
+                first = Number(num1)/Number(num2)
+                console.log('tipo do first antes', typeof(first),first)
+                first = String(first)
+                console.log('tipo do first depois', typeof(first),first)
+                
+                console.log('divisão')
+                console.log('tipo da temp', typeof(temp),temp)
+                console.log('tipo da expres', typeof(expression),expression)
+                
+            }
+            console.log('operand', operand, ', expression',expression, 'first', first)
+            operand = temp
+            first += temp
+            expression = first
+            console.log('acaou')
+            ope = false
+
+            }
+            
+            
+            
+        
+        function update(){
+            
+            current.innerHTML = first
+            express.innerHTML = master
+            
+            //console.log(expression)
+        }
+        function help(text){
+            
+            if (nums.includes(text)){
+                //console.log('you are a number')
+                console.log(text)
+                
+                first += text
+                expression += text
+                master += text
+                
+                
+            } 
+            if (operator.includes(text)){
+                temp = ''
+                if (text == '='){
+                    console.log(first)
+                    console.log(expression)
+                    result()
+                } else if (text == 'negate'){
+                    first *= -1
+                }
+                else if(text != lastnum){
+                    if (ope == false)
+                    {
+                        console.log('opa meu mano, tem nada aqui nn, mete bala')
+                        first += text
+                        expression += text
+                        lastnum = text
+                        master += text
+                        operand = text
+                        ope = true
+                    }
+                    
+                    else{
+                        console.log('ffirst é de', first)
+                        console.log('ope é de', ope)
+                        console.log('ja tem um operador aqui, vai fazer a conta vagabundo')
+                        master += text
+                        temp = text
+                        
+                        result()
+                    }
+                }
+            
+                
+            } 
+
+            if (special.includes(text)){
+                
+                
+                if (text == 'CE' ){
+                    first = ''
+                }
+                else if (text == 'C'){
+                    expression = ''
+                    first = ''
+                    temp = ''
+                }else if (text == '.'){
+                    first += text
+                    expression += text
+                    master += text
+                }
+                else if (text == 'delete'){
+                    let tempo = ''
+                    let tempa = ''
+                    console.log(first.length)
+                    for (let i = 0; i < first.length-1; i++){
+                        tempo += first[i]
+                        console.log(tempo, first[i], i)
+                        
+                    }
+                    for (let j = 0; j < master.length-1; j++){
+                        
+                        tempa += master.length[j]
+                        console.log(tempa, master[j], i)
+                        
+                    }
+                    first = tempo
+                }
+                else{
+                first += text
+                expression += text
+                master += text
+                }
+            }
+
+            lastnum = text
+            update()
+        }
+    </script>
+</body>
+</html>
