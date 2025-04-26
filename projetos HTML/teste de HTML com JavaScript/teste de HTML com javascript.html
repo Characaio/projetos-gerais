@@ -13,7 +13,7 @@
     
 </head>
 
-<body >
+<body style = "background-color: antiquewhite" >
   <header>
     <button id="login">login</button>
   </header>
@@ -31,7 +31,7 @@
   <div>
     
     
-  <div style="position: fixed; background-color: blanchedalmond; height: 95%; width: 25%;">
+  <div style="position: fixed; ; height: 95%; width: 25%;">
     <h1>oiiiiiii</h1>
     <p id="socorro" >isso é um paragrafo</p>
   </div>
@@ -40,18 +40,25 @@
     <div id="diva">
       <form id="formulario">
       <div>
-        <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br>
-        <label> 
-            <input type="radio" name = "sexo" value="masculino" required> masculino
-            <input type="radio" name = "sexo" value="feminino" required> feminino
-        </label><br>
-        <label> idade <br> <input type="text" name="idade" required></label><br>
-        <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br>
-        <label> Email <br> <input type="email" name="email" required></label>
-        </div>
-      </form>
-        <div>
-          <button id="deslog">sair</button>
+        <form id="formulario">
+          <label> Nome: <br> <input class="texto" type="text" name="nome" required></label><br>
+          <label> 
+          <input type="radio" name = "sexo" value="masculino" required> masculino
+          <input type="radio" name = "sexo" value="feminino" required> feminino
+          <input type="radio" name = "sexo" value="prefiro não dizer" required> prefiro não dizer
+          </label><br><br>
+          <label> idade <br> <input type="text" name="idade" required></label><br>
+          <label> Telefone <br> <input type="text" name="telefone" placeholder="DD xxxxx-xxxx" required></label><br>
+          <label> Email <br> <input type="email" name="email" required></label> <br> <br>
+          <select name="EstadoCivil" name="estadocivil" required>
+          <option value="selecione">selecione</option>
+          <option value="Casada(o)">Casada(o)</option>
+          <option value="Solteira(o)">Solteira(o)</option>
+          <option value="Viuva(o)">Viuva(o)</option>
+          <option value="Divorcida(o)">Divorcida(o)</option>
+          </select> 
+          </form>
+          <button id="voltar"> anterior </button>
           <button id="proximo"> proximo</button>
         </div>
     

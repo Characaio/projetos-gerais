@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário</title>
+  <link rel="stylesheet" href="aula11.css">
+  <style>
+    body{
+      background-color: aquamarine; text-align:left;
+    }
+  </style>
+    </head>
+<body>
+  <h3>Cadastro de Cliente</h3>
+  <div id="divForm">
+    <form action="cadastro.php">
+
+      <p>
+        <label for="nome">Nome:<br>
+          <input type="text" name="txtNome" id="nome" size="40px" required>
+        </label>
+      </p>
+
+      <p>
+        <label for="sexo">
+          Sexo:
+          <input type="radio" name="radSexo" value="masculino" id="sexo">Masculino
+          <input type="radio" name="radSexo" value="feminino">Feminino
+          <input type="radio" name="radSexo" value="neutro">Prefiro não dizer
+        </label>
+      </p>
+
+      <p>
+        Idade: <input type="number" name="nbrIdade" min="0" required><br>
+        <label for="telefone">
+          <br>
+          Telefone:<br>
+          <input type="tel" name="telTelefone" id="telefone" placeholder="DD XXXXX-XXXX">
+        </label><br>
+        <br>
+        E-mail <input type="email" id="email" size="40px"><br>
+        <br>
+        Estado Civil:
+        <select name="casado">
+        
+          <option value="Casada(o)">Casada(o)</option>
+          <option value="Solteira(o)">Solteira(o)</option>
+          <option value="Viúva(o)">Viúva(a)</option>  
+              <option value="Divorciada(o)">Divorciada(o)</option>
+
+        </select>
+
+      </p>
+        
+      <fieldset>
+        <legend>Endereço</legend>
+        Logradouro<br>
+        <input type="text" id="end" name="txtLogradouro"><br>
+        Número<br>
+        <input type="text" name="txtNumero" size="5px"><br>
+        Cidade<br>
+        <input type="text" name="txtCidade"><br>
+        <br>
+        UF:
+        <select name="estado">
+          <option value="selecione">Selecione</option>
+          <option value="AC">Acre</option>
+          <option value="BA">Bahia</option>
+          <option value="CE">Ceará</option>
+          <option value="PR">Paraná</option>
+          <option value="MG">Minas Gerais</option>
+          <option value="SP">São Paulo</option>
+          <option value="RJ">Rio de Janeiro</option>
+          <option value="AL">Alagoas</option>
+          <option value="GO">Goiás</option>
+          <option value="DF">Distrito Federal</option>
+          <option value="SC">Santa Catarina</option>
+          <option value="PE">Pernambuco</option>
+          <option value="AM">Amazonas</option>
+          <option value="MA">Maranhão</option>
+        
+        </select>
+      </fieldset>
+      <br>
+      <fieldset>
+        <p>
+          Idiomas:<br>
+          <input type="checkbox" name="periodo">Inglês
+          <input type="checkbox" name="chkPeriodo" value="tarde">Espanhol
+          <input type="checkbox" name="chkPeriodo" value="noite">Francês
+          <input type="checkbox" name="chkPeriodo" value="noite">Italiano
+          <input type="checkbox" name="chkPeriodo" value="noite">Alemão
+        </p>
+      </fieldset>
+        <p>
+          <fieldset>
+            <legend>Login</legend>
+            <p>Usuário <br> <input type="text"></p>
+            <p>Senha<br> <input type="password"></p>
+            <p>Confirmar senha<br> <input type="password"></p>
+          </fieldset>
+        </p>
+
+      <p>
+        Período:<br>
+        <input type="checkbox" name="periodo" >Manhã
+        <input type="checkbox" name="chkPeriodo" value="tarde">Tarde
+        <input type="checkbox" name="chkPeriodo" value="noite">Noite
+      </p>
+
+      <p>
+        Deixe-nos uma mensagem<br>
+        <textarea cols="70" rows="5"></textarea>
+      </p>
+
+    
+
+      <p>
+        <input type="submit" value="Cadastrar">
+      </p>
+
+    </form>
+  </div>
+</body>
+</html>
