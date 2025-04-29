@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Deslizando</title>
+  <style>
+    #diva {
+      width: 40%;
+      margin-left: 110%;
+      
+      
+      
+    }
+
+    .entra{
+      animation: entrar 2s ease-in-out forwards;
+    }
+    .sair{
+      animation: sair 2s ease-in-out forwards;
+    }
+    
+    @keyframes sair{
+      from{margin-left: 5%;}
+      to{margin-left: 110%;}
+    }
+    
+    @keyframes entrar {
+      from{margin-left: 110%;}
+      to{margin-left: 5%;}
+    }
+    
+    
+    </style>
+</head>
+<body>
+  <p id="socorro" style="width: 25%;">isso é um paragrafo</p>
+  <button onclick="azul()">azul</button>
+  <button onclick="amarelo()">amarelo</button>
+  <button onclick="preto()">preto</button>
+  <button onclick="verde()">verde</button>
+  <button onclick="roxo()">roxo</button>
+  <button onclick="rosa()">rosa</button>
+  <br><br>
+
+  <div id="diva" >
+    <p style="background-color: aqua;"> oi </p>
+    <p style="background-color: antiquewhite;"> ola </p>
+    <p style="background-color: aquamarine;"> não</p>
+    <p style="background-color: azure;"> sim</p>
+  </div>
+
+  <div>
+    <button  id="login">login</button>
+    <button  id="deslog">sem login</button>
+  </div>
+
+  <script>
+    const login = document.getElementById("login")
+    const diva = document.getElementById("diva")
+    const deslog = document.getElementById("deslog")
+    escondido = false
+    
+    
+    
+    login.addEventListener('click', () =>{
+      if (escondido){
+        diva.classList.remove('sair');
+        escondido = false
+        }
+        diva.classList.add('entra');
+    })
+
+    deslog.addEventListener('click', () =>{
+      if (!escondido){
+        diva.classList.remove('entra')
+        escondido = true
+      }
+      diva.classList.add('sair')
+    })
+
+
+    function azul() {
+      socorro.style.backgroundColor = "blue"
+      socorro.style.color = "black"
+    }
+    function amarelo() {
+      socorro.style.backgroundColor = "yellow"
+      socorro.style.color = "black"
+    }
+    function preto() {
+      socorro.style.backgroundColor = "black"
+      socorro.style.color = "white"
+    }
+    function verde() {
+      socorro.style.backgroundColor = "green"
+      socorro.style.color = "white"
+    }
+    function roxo() {
+      socorro.style.backgroundColor = "purple"
+      socorro.style.color = "white"
+    }
+    function rosa() {
+      socorro.style.backgroundColor = "pink"
+      socorro.style.color = "black"
+    }
+  </script>
+</body>
+</html>
