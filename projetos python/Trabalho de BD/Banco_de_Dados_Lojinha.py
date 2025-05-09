@@ -11,8 +11,6 @@ def verificar_arquivo():
         open(arquivo_dos_produtos, 'x')
         print('arquivo criado')
         
-    
-        
 def adicionar_produto(item_final):
     global Mudança
     Mudança = ''
@@ -35,18 +33,7 @@ def adicionar_produto(item_final):
                 Mudança = id
                 escolha1 = str(input('produto ja cadastrado, deseja alterar ele?[Sim/Não] \n$ '))
                 alterar_produto()
-                # listar_produtos()
-                
-                # escolha2 = int(input('Escolha o produto pelo ID'))
-                # if escolha1.lower() == 'sim':
-                #     quant1 = int(quant1) + 1
-                #     mudado = str(item1) + separador + str(preço1) + separador + str(quant1)
-                # # print(linhas)
-                # # print('mudei')
-                # linhas[escolha2] = mudado
-                # # print(linhas)
-                # # print('a')
-                # # print(temporario)
+    
     with open(arquivo_dos_produtos, 'r') as file:
         temporario = file.read()
         
@@ -56,8 +43,6 @@ def adicionar_produto(item_final):
             file.write(f'{temporario}\n{item_final} ')
         else:
             file.write(f'{temporario}')
-        #print(f'Item: {item} Adicionado com preço de R${preço}')
-        
         listar_produtos()
         
 def tem_produtos(linhas):
@@ -121,10 +106,10 @@ def alterar_produto():
             print(f'Item: {itemzin}  Preço: {preço}  Quantidade {quantidade}')
             print('-'*20)
             escolha2 = str(input("Quer trocar o preço, item ou quer sair?\nPreço\nItem\nQuantidade\nSair \n$ "))
-            escolha2.lower()
+            escolha2 = escolha2.lower()
             print('-'*20)
             
-            if escolha2 == 'preço':
+            if escolha2 == 'preço' or escolha2 == "preco":
                 print('-'*20)
                 preço = float(input('Coloque um novo preço: \n$ '))
                 print(preço)
@@ -169,7 +154,6 @@ def remover_tudo():
 
 def selecione():
     print('-'*20)
-    #arroz, feijão
     item = str(input("Escolha um produtinho: \n$ "))
     preço = float(input('Qual seu valor?: \n$ '))
     quantidade = int(input('Quantos desse produto tem? \n$ '))
