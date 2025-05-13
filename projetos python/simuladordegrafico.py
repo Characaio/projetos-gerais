@@ -40,14 +40,19 @@ active3 = False
 active4 = False
 active5 = False
 color = (0,0,0)
-
 pontos = []
+color1 = (0,0,0)
+color2 = (0,0,0)
+color3 = (0,0,0)
+color4 = (0,0,0)
+color5 = (0,0,0)
 estado = 'grafico'
 escolhax = 20
 escolhay = 10
 user_text3 = escolhax
 user_text4 = escolhay
 highest_number = escolhay
+
 def update():
     global user_text1,user_text2,user_text3,user_text4,user_text5,active1,active2,color1,color2,color5,estado,escolhax,escolhay,highest_number
     pg.draw.rect(screen,color1,Xaxis)
@@ -82,8 +87,6 @@ def update():
     screen.blit(text_surface3,(parabola.x+5,parabola.y))
     screen.blit(text_surface4,(Xsize.x+5,Xsize.y))
     screen.blit(text_surface5,(Ysize.x+5,Ysize.y))
-    
-    
         
     if user_text1 != '' and eval(user_text1) > escolhax and (not active3):
         escolhax = eval(user_text1)
@@ -92,7 +95,6 @@ def update():
     if user_text2 != '' and eval(user_text2) > escolhay and (not active4):
         escolhay = eval(user_text2)
         user_text4 = user_text2
-        
         
     if user_text3 != '' and type(user_text3) != int:
         escolhax = eval(user_text3)
@@ -104,7 +106,6 @@ def update():
         for cell in pontos:
             if cell[1] > highest_number:
                 highest_number = cell[1]
-                
         escolhay = highest_number
     
     
@@ -126,6 +127,7 @@ def update():
         if j != 0:
             screen.blit(text2,(limitey[0]+5,limitey[1]-8))
             pg.draw.circle(screen,GREEN,(starting_point[0],starting_point[1]-escalay),3)
+    
     if user_text1 != '' and user_text2 != '':
         if estado == 'grafico':
             valor1 = eval(user_text1)
@@ -134,10 +136,9 @@ def update():
             linhaB = pg.Rect(starting_point[0],starting_point[1]-escala_geral[1]*valor2,escala_geral[0]*valor1,3)
             pg.draw.rect(screen,YELLOW, linhaA)
             pg.draw.rect(screen,VIOLET, linhaB)
+            
     escala_geral[0] = (570-130)/escolhax
     escala_geral[1] = (570-130)/escolhay
-        #print(escala_geral)
-    
 
 def criar_pontos():
     global user_text1,user_text2,escolhax,escolhay,highest_nuumber
@@ -145,19 +146,16 @@ def criar_pontos():
         x,y = eval(user_text1),eval(user_text2)
         pg.draw.circle(screen,(BLACK),(starting_point[0]+escala_geral[0]*x, starting_point[1]-escala_geral[1]*y),4)
     elif estado == 'parabola':
-
         escolhay = highest_number
-        
         for i,cell in enumerate(pontos):
-            #print(cell)
             pg.draw.circle(screen,YELLOW,(starting_point[0]+(escala_geral[0]*cell[0]),starting_point[1]-(escala_geral[1]*cell[1])),4)
-operators = {'+', '-', '*', '/'}    
 
-def is_operator(input_char):
+
+def isoperator(input_char):
+    operators = {'+', '-', '*', '/'}    
     return input_char in operators  
   
 def fazer_parabola():
-    
     global estado,user_text5,pontos
     for i in range(0,10):
         socorro = [i, int(eval(user_text5))]
@@ -173,6 +171,7 @@ def inicio():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run = False
+                
             if event.type == pg.MOUSEBUTTONDOWN:
                 if Xaxis.collidepoint(event.pos):
                     active1 = True
@@ -220,15 +219,14 @@ def inicio():
                     user_text4 = str(user_text4)
                     if event.key == pg.K_BACKSPACE: 
                         user_text4 = user_text4[:-1] 
-                    elif event.unicode.isdigit() or event.unicode.isoperator(): 
+                    elif event.unicode.isdigit() or isoperator(event.unicode): 
                         user_text4 += event.unicode
                 if active5:
                     user_text5 = str(user_text5)
                     if event.key == pg.K_BACKSPACE: 
                         user_text5 = user_text5[:-1] 
-                    elif event.unicode.isdigit() or is_operator(event.unicode): 
+                    elif event.unicode.isdigit() or isoperator(event.unicode): 
                         user_text5 += event.unicode
-            
         if active1:
             color1 = (127,127,127)
         else:
