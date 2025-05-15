@@ -44,6 +44,9 @@ negativeYsizeFrame = pg.Rect(10,175,80,50)
 escalaxFrame = pg.Rect(10,230,80,50)
 escalayFrame = pg.Rect(10,285,80,50)
 starting_point = [300,300]
+Menu_pontos = pg.Rect(WIDTH-105,0,105,140)
+pontox = pg.Rect(WIDTH-100,10,95,55)
+pontoy = pg.Rect(WIDTH-100,75,95,55)
 ativar_menu = False
 def update():
     global coords,active1,active2,active3,active4,active5,positiveXsize,positiveYsize,negativeXsize,negativeYsize,escalax,escalay
@@ -54,12 +57,12 @@ def update():
     if escalay == '':
         escalay = '0'
         
-    if negativeYsize != '':
+    if negativeYsize != '' and negativeYsize != '-':
         negy = eval(negativeYsize)
     else:
         negy = 0
         
-    if negativeXsize != '':
+    if negativeXsize != '' and negativeXsize != '-':
         negx = eval(negativeXsize)
     else:
         negx = 0
@@ -91,27 +94,27 @@ def update():
         screen.blit(surface8,(canto.x,canto.y))
         for i in range(-1*posix,0,1):
             if i != 0:
-                pg.draw.circle(screen,RED,(LinhaXpositivo.x+abs(i)*10*eval(escalax)+5,LinhaXpositivo.y+5),5)
+                pg.draw.circle(screen,RED,(starting_point[0]+abs(i)*10*eval(escalax),starting_point[1]+5),5)
                 letras = font.render(str(abs(i)), True, BLACK)
-                screen.blit(letras,((LinhaXpositivo.x+abs(i)*10*eval(escalax)+5,LinhaXpositivo.y+5)))
+                screen.blit(letras,((starting_point[0]+abs(i)*10*eval(escalax)+5,starting_point[1]+5)))
             
         for i in range(-1*posiy,0,1):
             if i != 0:
-                pg.draw.circle(screen,RED,(LinhaYPositiva.x+5,LinhaYPositiva.y+i*10*eval(escalay)+10+LinhaYPositiva.h),5)
+                pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+i*10*eval(escalay)),5)
                 letras = font.render(str(-1*i), True, BLACK)
-                screen.blit(letras,((LinhaYPositiva.x-25,LinhaYPositiva.y+i*10*eval(escalay)+10+LinhaYPositiva.h-10)))
+                screen.blit(letras,((starting_point[0]-25,starting_point[1]+i*10*eval(escalay)+10-10)))
             
         for i in range(0,negx-1,-1):
             if i != 0:
                 pg.draw.circle(screen,RED,(starting_point[0]+i*10*eval(escalax),starting_point[1]+5),5)
                 letras = font.render(str(i), True, BLACK)
-                screen.blit(letras,((starting_point[0]+i*10*eval(escalax),starting_point[1])))
+                screen.blit(letras,((starting_point[0]+i*10*eval(escalax)-5,starting_point[1]+5)))
             
         for i in range(-1,negy-1,-1):
-            pg.draw.circle(screen,RED,(LinhaYNegativa.x+5,LinhaYNegativa.y+abs(i)*10*eval(escalay)),5)
+            pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+abs(i)*10*eval(escalay)),5)
             letras = font.render(str(i), True, BLACK)
             if i != 0 or i != -1:
-                screen.blit(letras,((LinhaYNegativa.x-25,LinhaYNegativa.y+abs(i)*10*eval(escalay))))
+                screen.blit(letras,((starting_point[0]-25,starting_point[1]+abs(i)*10*eval(escalay)-5)))
         
         pg.draw.circle(screen,(BLACK),(starting_point[0]+5*10*eval(escalax),starting_point[1]-5*10*eval(escalay)),5)
         
@@ -135,7 +138,7 @@ def update():
             if active6:
                 color6 = (150,150,150)
             pg.draw.rect(screen,(200,200,200), menu)
-            #pg.draw.rect(screen,(RED),sair)
+            pg.draw.rect(screen,(RED),sair)
             pg.draw.circle(screen,(BLACK),(starting_point[0]+5,starting_point[1]+5),5)
             pg.draw.rect(screen,(color1),positiveXsizeFrame)
             pg.draw.rect(screen,(color2),positiveYsizeFrame)
@@ -171,6 +174,14 @@ def update():
             screen.blit(info4,(negativeYsizeFrame.x+5+negativeYsizeFrame.w,negativeYsizeFrame.y))
             screen.blit(info5,(escalaxFrame.x+5+escalaxFrame.w,escalaxFrame.y))
             screen.blit(info6,(escalayFrame.x+5+escalayFrame.w,escalayFrame.y))
+        else:
+            pg.draw.rect(screen,(BLACK),Menu_pontos)
+            pg.draw.rect(screen,(150,150,150),pontox)
+            pg.draw.rect(screen,(150,150,150),pontoy)
+            texto1 = font.render('ponto x',True,BLACK)
+            texto2 = font.render('ponto y',True,BLACK)
+            screen.blit(texto1,(pontox.x-70,pontox.y))
+            screen.blit(texto2,(pontoy.x-70,pontoy.y))
     if escalax == '0':
         escalax = ''
     if escalay == '0':
@@ -265,11 +276,15 @@ while run:
         pressed = False
     if key[pg.K_RIGHT]:
         coords[0] -= 0.1
+        starting_point[0] -= 0.1
     if key[pg.K_DOWN]:
         coords[1] -= 0.1
+        starting_point[1] -= 0.1
     if key[pg.K_UP]:
         coords[1] += 0.1
+        starting_point[1] += 0.1
     if key[pg.K_LEFT]:
         coords[0] += 0.1
+        starting_point[0] += 0.1
     pg.display.update()
     
