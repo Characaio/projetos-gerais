@@ -75,7 +75,7 @@ negativeYsizescrolldown = pg.Rect(negativeYsizeFrame.x+negativeYsizeFrame.w-10,n
 
 
 def update():
-    global positive,negative,escolhax,escolhay,coords,active1,active2,active3,active4,active5,positiveXsize,positiveYsize,negativeXsize,negativeYsize,escalax,escalay
+    global positive,pontos,negative,escolhax,escolhay,coords,active1,active2,active3,active4,active5,positiveXsize,positiveYsize,negativeXsize,negativeYsize,escalax,escalay
     
 
     if escalax == '':
@@ -105,40 +105,46 @@ def update():
         
     if state == 'grafico':
         
-        LinhaXpositivo = pg.Rect(starting_point[0],starting_point[1],eval(escalax)*posix*10+5,10)
-        LinhaXNegativo = pg.Rect(starting_point[0]-eval(escalax)*abs(negx*10),starting_point[1],eval(escalax)*abs(negx*10),10)
-        LinhaYNegativa = pg.Rect(starting_point[0],starting_point[1],10,eval(escalay)*abs(negy*10))
-        LinhaYPositiva = pg.Rect(starting_point[0],starting_point[1]-posiy*10*eval(escalay),10,eval(escalay)*posiy*10)
+        LinhaXpositivo = pg.Rect(starting_point[0],starting_point[1],eval(escalax)*posix*10+5,8)
+        LinhaXNegativo = pg.Rect(starting_point[0]-eval(escalax)*abs(negx*10),starting_point[1],eval(escalax)*abs(negx*10),8)
+        LinhaYNegativa = pg.Rect(starting_point[0],starting_point[1],8,eval(escalay)*abs(negy*10))
+        LinhaYPositiva = pg.Rect(starting_point[0],starting_point[1]-posiy*10*eval(escalay),8,eval(escalay)*posiy*10)
         inicio = pg.Rect(starting_point[0],starting_point[1],10,10)
-        pg.draw.rect(screen,BLUE,LinhaXpositivo)
-        pg.draw.rect(screen,GREEN,LinhaXNegativo)
-        pg.draw.rect(screen,VIOLET,LinhaYNegativa)
-        pg.draw.rect(screen,YELLOW,LinhaYPositiva)
+        # pg.draw.rect(screen,BLUE,LinhaXpositivo)
+        # pg.draw.rect(screen,GREEN,LinhaXNegativo)
+        # pg.draw.rect(screen,VIOLET,LinhaYNegativa)
+        # pg.draw.rect(screen,YELLOW,LinhaYPositiva)
+        pg.draw.rect(screen,BLACK,LinhaXpositivo)
+        pg.draw.rect(screen,BLACK,LinhaXNegativo)
+        pg.draw.rect(screen,BLACK,LinhaYNegativa)
+        pg.draw.rect(screen,BLACK,LinhaYPositiva)
+        pg.draw.circle(screen,(RED),(starting_point[0]+4,starting_point[1]+4),8)
         pg.draw.rect(screen,RED,inicio)
         
         pg.draw.rect(screen,(BLACK),canto)
         surface8 = font.render(str('menu'), True, WHITE)
         screen.blit(surface8,(canto.x,canto.y))
+        ballsize = 5
         for i in range(-1*posix,0,1):
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+abs(i)*10*eval(escalax)+5,starting_point[1]+5),5)
+                pg.draw.circle(screen,RED,(starting_point[0]+(i*10*eval(escalax))*-1+10,starting_point[1]+4),ballsize)
                 letras = font.render(str(abs(i)), True, BLACK)
-                screen.blit(letras,((starting_point[0]+abs(i)*10*eval(escalax)+5,starting_point[1]+5)))
+                screen.blit(letras,((starting_point[0]+abs(i)*10*eval(escalax)+10,starting_point[1]+5)))
             
         for i in range(-1*posiy,0,1):
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+i*10*eval(escalay)),5)
+                pg.draw.circle(screen,RED,(starting_point[0]+4,starting_point[1]+i*10*eval(escalay)),ballsize)
                 letras = font.render(str(-1*i), True, BLACK)
-                screen.blit(letras,((starting_point[0]-25,starting_point[1]+i*10*eval(escalay))))
+                screen.blit(letras,((starting_point[0]-25,starting_point[1]+i*10*eval(escalay)-10)))
             
         for i in range(0,negx-1,-1):
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+i*10*eval(escalax),starting_point[1]+5),5)
+                pg.draw.circle(screen,RED,(starting_point[0]+i*10*eval(escalax),starting_point[1]+4),ballsize)
                 letras = font.render(str(i), True, BLACK)
-                screen.blit(letras,((starting_point[0]+i*10*eval(escalax)-5,starting_point[1]+5)))
+                screen.blit(letras,((starting_point[0]+i*10*eval(escalax),starting_point[1]+5)))
             
         for i in range(-1,negy-1,-1):
-            pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+abs(i)*10*eval(escalay)+10),5)
+            pg.draw.circle(screen,RED,(starting_point[0]+4,starting_point[1]+abs(i)*10*eval(escalay)+1),ballsize)
             letras = font.render(str(i), True, BLACK)
             if i != 0 or i != -1:
                 screen.blit(letras,((starting_point[0]-25,starting_point[1]+abs(i)*10*eval(escalay)-5)))
@@ -158,28 +164,28 @@ def update():
                 
                 
             if inicio1 > 0 and positive:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1+10,starting_point[1]-inicio2),ballsize)
             if inicio1 < 0 and negative:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),ballsize)
                 
             if inicio2 > 0 and positive:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1+10,starting_point[1]-inicio2),ballsize)
             if inicio2 < 0 and negative:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),ballsize)
                 
                 
             if ponto[0] > 0 and positive:
-                linha1 = pg.Rect(starting_point[0],starting_point[1]-inicio2-2,inicio1,5)
-                pg.draw.rect(screen,(255,150,50),linha1)
+                linha1 = pg.Rect(starting_point[0],starting_point[1]-inicio2-2,inicio1+7,3)
+                pg.draw.rect(screen,(BLACK),linha1)
             elif ponto[0] < 0 and negative:
-                linha3 = pg.Rect(starting_point[0]+inicio1,starting_point[1],5,abs(inicio2))
-                pg.draw.rect(screen,(255,150,50),linha3)
+                linha3 = pg.Rect(starting_point[0]+inicio1-1,starting_point[1],3,abs(inicio2))
+                pg.draw.rect(screen,(BLACK),linha3)
             if ponto[1] > 0 and positive:
-                linha2 = pg.Rect(starting_point[0]+inicio1,starting_point[1]-inicio2,5,inicio2)
-                pg.draw.rect(screen,(255,150,50),linha2)
+                linha2 = pg.Rect(starting_point[0]+inicio1+9,starting_point[1]-inicio2,3,inicio2)
+                pg.draw.rect(screen,(BLACK),linha2)
             elif ponto[1] < 0 and negative:
-                linha4 = pg.Rect(starting_point[0]+inicio1,starting_point[1]-inicio2,abs(inicio1),5)
-                pg.draw.rect(screen,(255,150,50),linha4)
+                linha4 = pg.Rect(starting_point[0]+inicio1,starting_point[1]-inicio2,abs(inicio1),3)
+                pg.draw.rect(screen,(BLACK),linha4)
         
         if ativar_menu:
             color1 = (0,0,0)
@@ -268,8 +274,8 @@ def update():
             screen.blit(texto1,(pontox.x-70,pontox.y))
             screen.blit(texto2,(pontoy.x-70,pontoy.y))
             screen.blit(texto3,(confirmar.x-70,confirmar.y))
-            screen.blit(texto4,(pontox.x-5,pontox.y+5))
-            screen.blit(texto5,(pontoy.x-5,pontoy.y+5))
+            screen.blit(texto4,(pontox.x+5,pontox.y+5))
+            screen.blit(texto5,(pontoy.x+5,pontoy.y+5))
     if escalax == '0':
         escalax = ''
     if escalay == '0':
@@ -392,7 +398,10 @@ while run:
             else:
                 active8 = False        
             if confirmar.collidepoint(event.pos):
-                pontos.append([eval(escolhax),eval(escolhay)])
+                item = [eval(escolhax),eval(escolhay)]
+                pontos.append(item)
+                print('adicionado')
+                print(item)
             
             
         if event.type == pg.KEYDOWN:
@@ -460,4 +469,17 @@ while run:
     if key[pg.K_LEFT]:
         coords[0] += 0.1
         starting_point[0] += 0.1
+        
+    if key[pg.K_d]:
+        coords[0] -= 1
+        starting_point[0] -= 1
+    if key[pg.K_s]:
+        coords[1] -= 1
+        starting_point[1] -= 1
+    if key[pg.K_w]:
+        coords[1] += 1
+        starting_point[1] += 1
+    if key[pg.K_a]:
+        coords[0] += 1
+        starting_point[0] += 1
     pg.display.update()
