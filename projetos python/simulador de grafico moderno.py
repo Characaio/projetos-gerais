@@ -5,7 +5,7 @@ pg.init()
 
 run = True
 
-WIDTH,HEIGHT = 600,600
+WIDTH,HEIGHT = 800,600
 
 
 
@@ -21,9 +21,8 @@ coords = [300,300]
 canto = pg.Rect(0,0,100,50)
 escalax = '1'
 escalay = '1'
-pontos = [300,200,100,50]
 menu = pg.Rect(0,0,WIDTH/2.5,HEIGHT/1.5)
-sair = pg.Rect(520,0,80,50)
+sair = pg.Rect(WIDTH-80,0,80,50)
 state = 'grafico'
 pressed = False
 font = pg.font.SysFont('arial black', 15)
@@ -33,10 +32,14 @@ active3 = False
 active4 = False
 active5 = False
 active6 = False
+active7 = False
+active8 = False
 positiveXsize = '30'
 positiveYsize = '20'
 negativeXsize = '-10'
-negativeYsize = '-10'
+negativeYsize = '-20'
+pontos = [(5,5),(6,6),(8,8),(-5,-3),(-6,-2)]
+positive,negative = False,False
 positiveXsizeFrame = pg.Rect(10,10,80,50)
 positiveYsizeFrame = pg.Rect(10,65,80,50)
 negativeXsizeFrame = pg.Rect(10,120,80,50)
@@ -44,12 +47,35 @@ negativeYsizeFrame = pg.Rect(10,175,80,50)
 escalaxFrame = pg.Rect(10,230,80,50)
 escalayFrame = pg.Rect(10,285,80,50)
 starting_point = [300,300]
-Menu_pontos = pg.Rect(WIDTH-105,0,105,140)
+Menu_pontos = pg.Rect(WIDTH-105,0,105,200)
 pontox = pg.Rect(WIDTH-100,10,95,55)
 pontoy = pg.Rect(WIDTH-100,75,95,55)
+confirmar = pg.Rect(WIDTH-100,140,95,55)
+escolhax = ''
+escolhay = ''
 ativar_menu = False
+
+escalaxscrollup = pg.Rect(escalaxFrame.x+escalaxFrame.w-10,escalaxFrame.y,10,escalaxFrame.h/2-5)
+escalaxscrolldown = pg.Rect(escalaxFrame.x+escalaxFrame.w-10,escalaxFrame.y+escalaxFrame.h/2+5,10,escalaxFrame.h/2-5)
+
+escalayscrollup = pg.Rect(escalayFrame.x+escalayFrame.w-10,escalayFrame.y,10,escalayFrame.h/2-5)
+escalayscrolldown = pg.Rect(escalayFrame.x+escalayFrame.w-10,escalayFrame.y+escalayFrame.h/2+5,10,escalayFrame.h/2-5)
+
+positiveXsizescrollup = pg.Rect(positiveXsizeFrame.x+positiveXsizeFrame.w-10,positiveXsizeFrame.y,10,positiveXsizeFrame.h/2-5)
+positiveXsizescrolldown = pg.Rect(positiveXsizeFrame.x+positiveXsizeFrame.w-10,positiveXsizeFrame.y+positiveXsizeFrame.h/2+5,10,positiveXsizeFrame.h/2-5)
+
+positiveYsizescrollup = pg.Rect(positiveYsizeFrame.x+positiveYsizeFrame.w-10,positiveYsizeFrame.y,10,positiveYsizeFrame.h/2-5)
+positiveYsizescrolldown = pg.Rect(positiveYsizeFrame.x+positiveYsizeFrame.w-10,positiveYsizeFrame.y+positiveYsizeFrame.h/2+5,10,positiveYsizeFrame.h/2-5)
+
+negativeXsizescrollup = pg.Rect(negativeXsizeFrame.x+negativeXsizeFrame.w-10,negativeXsizeFrame.y,10,negativeXsizeFrame.h/2-5)
+negativeXsizescrolldown = pg.Rect(negativeXsizeFrame.x+negativeXsizeFrame.w-10,negativeXsizeFrame.y+negativeXsizeFrame.h/2+5,10,negativeXsizeFrame.h/2-5)
+
+negativeYsizescrollup = pg.Rect(negativeYsizeFrame.x+negativeYsizeFrame.w-10,negativeYsizeFrame.y,10,negativeYsizeFrame.h/2-5)
+negativeYsizescrolldown = pg.Rect(negativeYsizeFrame.x+negativeYsizeFrame.w-10,negativeYsizeFrame.y+negativeYsizeFrame.h/2+5,10,negativeYsizeFrame.h/2-5)
+
+
 def update():
-    global coords,active1,active2,active3,active4,active5,positiveXsize,positiveYsize,negativeXsize,negativeYsize,escalax,escalay
+    global positive,negative,escolhax,escolhay,coords,active1,active2,active3,active4,active5,positiveXsize,positiveYsize,negativeXsize,negativeYsize,escalax,escalay
     
 
     if escalax == '':
@@ -78,23 +104,24 @@ def update():
         posix = 0
         
     if state == 'grafico':
-        #pra cima
-        LinhaXpositivo = pg.Rect(coords[0],coords[1],eval(escalax)*posix*10+5,10)
-        LinhaXNegativo = pg.Rect(coords[0]-eval(escalax)*abs(negx*10),coords[1],eval(escalax)*abs(negx*10),10)
-        LinhaYNegativa = pg.Rect(coords[0],coords[1],10,eval(escalay)*abs(negy*10))
-        LinhaYPositiva = pg.Rect(coords[0],coords[1]+10-posiy*10*eval(escalay),10,eval(escalay)*posiy*10+-5)
-        inicio = pg.Rect(coords[0],coords[1],10,10)
-        pg.draw.rect(screen,(BLACK),canto)
+        
+        LinhaXpositivo = pg.Rect(starting_point[0],starting_point[1],eval(escalax)*posix*10+5,10)
+        LinhaXNegativo = pg.Rect(starting_point[0]-eval(escalax)*abs(negx*10),starting_point[1],eval(escalax)*abs(negx*10),10)
+        LinhaYNegativa = pg.Rect(starting_point[0],starting_point[1],10,eval(escalay)*abs(negy*10))
+        LinhaYPositiva = pg.Rect(starting_point[0],starting_point[1]-posiy*10*eval(escalay),10,eval(escalay)*posiy*10)
+        inicio = pg.Rect(starting_point[0],starting_point[1],10,10)
         pg.draw.rect(screen,BLUE,LinhaXpositivo)
         pg.draw.rect(screen,GREEN,LinhaXNegativo)
         pg.draw.rect(screen,VIOLET,LinhaYNegativa)
         pg.draw.rect(screen,YELLOW,LinhaYPositiva)
         pg.draw.rect(screen,RED,inicio)
+        
+        pg.draw.rect(screen,(BLACK),canto)
         surface8 = font.render(str('menu'), True, WHITE)
         screen.blit(surface8,(canto.x,canto.y))
         for i in range(-1*posix,0,1):
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+abs(i)*10*eval(escalax),starting_point[1]+5),5)
+                pg.draw.circle(screen,RED,(starting_point[0]+abs(i)*10*eval(escalax)+5,starting_point[1]+5),5)
                 letras = font.render(str(abs(i)), True, BLACK)
                 screen.blit(letras,((starting_point[0]+abs(i)*10*eval(escalax)+5,starting_point[1]+5)))
             
@@ -102,7 +129,7 @@ def update():
             if i != 0:
                 pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+i*10*eval(escalay)),5)
                 letras = font.render(str(-1*i), True, BLACK)
-                screen.blit(letras,((starting_point[0]-25,starting_point[1]+i*10*eval(escalay)+10-10)))
+                screen.blit(letras,((starting_point[0]-25,starting_point[1]+i*10*eval(escalay))))
             
         for i in range(0,negx-1,-1):
             if i != 0:
@@ -111,12 +138,48 @@ def update():
                 screen.blit(letras,((starting_point[0]+i*10*eval(escalax)-5,starting_point[1]+5)))
             
         for i in range(-1,negy-1,-1):
-            pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+abs(i)*10*eval(escalay)),5)
+            pg.draw.circle(screen,RED,(starting_point[0]+5,starting_point[1]+abs(i)*10*eval(escalay)+10),5)
             letras = font.render(str(i), True, BLACK)
             if i != 0 or i != -1:
                 screen.blit(letras,((starting_point[0]-25,starting_point[1]+abs(i)*10*eval(escalay)-5)))
         
-        pg.draw.circle(screen,(BLACK),(starting_point[0]+5*10*eval(escalax),starting_point[1]-5*10*eval(escalay)),5)
+        for i,ponto in enumerate(pontos):
+            inicio1 = ponto[0]*10*eval(escalax)
+            inicio2 = ponto[1]*10*eval(escalay)
+            if ponto[0] <= eval(positiveXsize) and ponto[1] <= eval(positiveYsize):
+                positive = True
+            else:
+                positive = False
+            
+            if ponto[0] >= eval(negativeXsize) and ponto[1] >= eval(negativeYsize):
+                negative = True
+            else:
+                negative = False
+                
+                
+            if inicio1 > 0 and positive:
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+            if inicio1 < 0 and negative:
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+                
+            if inicio2 > 0 and positive:
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+            if inicio2 < 0 and negative:
+                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),5)
+                
+                
+            if ponto[0] > 0 and positive:
+                linha1 = pg.Rect(starting_point[0],starting_point[1]-inicio2-2,inicio1,5)
+                pg.draw.rect(screen,(255,150,50),linha1)
+            elif ponto[0] < 0 and negative:
+                linha3 = pg.Rect(starting_point[0]+inicio1,starting_point[1],5,abs(inicio2))
+                pg.draw.rect(screen,(255,150,50),linha3)
+            if ponto[1] > 0 and positive:
+                linha2 = pg.Rect(starting_point[0]+inicio1,starting_point[1]-inicio2,5,inicio2)
+                pg.draw.rect(screen,(255,150,50),linha2)
+            elif ponto[1] < 0 and negative:
+                linha4 = pg.Rect(starting_point[0]+inicio1,starting_point[1]-inicio2,abs(inicio1),5)
+                pg.draw.rect(screen,(255,150,50),linha4)
         
         if ativar_menu:
             color1 = (0,0,0)
@@ -139,13 +202,31 @@ def update():
                 color6 = (150,150,150)
             pg.draw.rect(screen,(200,200,200), menu)
             pg.draw.rect(screen,(RED),sair)
-            pg.draw.circle(screen,(BLACK),(starting_point[0]+5,starting_point[1]+5),5)
+            #pg.draw.circle(screen,(BLACK),(starting_point[0],starting_point[1]),5)
             pg.draw.rect(screen,(color1),positiveXsizeFrame)
             pg.draw.rect(screen,(color2),positiveYsizeFrame)
             pg.draw.rect(screen,(color3),negativeXsizeFrame)
             pg.draw.rect(screen,(color4),negativeYsizeFrame)
             pg.draw.rect(screen,(color5),escalaxFrame)
             pg.draw.rect(screen,(color6),escalayFrame)
+            
+            pg.draw.rect(screen,(GREEN),escalaxscrollup)
+            pg.draw.rect(screen,(BLUE),escalaxscrolldown)
+            
+            pg.draw.rect(screen,(GREEN),escalayscrollup)
+            pg.draw.rect(screen,(BLUE),escalayscrolldown)
+            
+            pg.draw.rect(screen,(GREEN),positiveXsizescrollup)
+            pg.draw.rect(screen,(BLUE),positiveXsizescrolldown)
+            
+            pg.draw.rect(screen,(GREEN),positiveYsizescrollup)
+            pg.draw.rect(screen,(BLUE),positiveYsizescrolldown)
+            
+            pg.draw.rect(screen,(GREEN),negativeXsizescrollup)
+            pg.draw.rect(screen,(BLUE),negativeXsizescrolldown)
+            
+            pg.draw.rect(screen,(GREEN),negativeYsizescrollup)
+            pg.draw.rect(screen,(BLUE),negativeYsizescrolldown)
             surface1 = font.render(str(positiveXsize), True, WHITE)
             surface2 = font.render(str(positiveYsize), True, WHITE)
             surface3 = font.render(str(negativeXsize), True, WHITE)
@@ -178,10 +259,17 @@ def update():
             pg.draw.rect(screen,(BLACK),Menu_pontos)
             pg.draw.rect(screen,(150,150,150),pontox)
             pg.draw.rect(screen,(150,150,150),pontoy)
-            texto1 = font.render('ponto x',True,BLACK)
+            pg.draw.rect(screen,(GREEN),confirmar)
+            texto1 = font.render('Ponto x',True,BLACK)
             texto2 = font.render('ponto y',True,BLACK)
+            texto3 = font.render('confirmar',True,BLACK)
+            texto4 = font.render(str(escolhax),True,BLACK)
+            texto5 = font.render(str(escolhay),True,BLACK)
             screen.blit(texto1,(pontox.x-70,pontox.y))
             screen.blit(texto2,(pontoy.x-70,pontoy.y))
+            screen.blit(texto3,(confirmar.x-70,confirmar.y))
+            screen.blit(texto4,(pontox.x-5,pontox.y+5))
+            screen.blit(texto5,(pontoy.x-5,pontoy.y+5))
     if escalax == '0':
         escalax = ''
     if escalay == '0':
@@ -228,10 +316,85 @@ while run:
                 active6 = True
             else:
                 active6 = False
+                
             if canto.collidepoint(event.pos):
                 ativar_menu = True
             if sair.collidepoint(event.pos):
                 ativar_menu = False
+                
+            if escalaxscrollup.collidepoint(event.pos):
+                a = eval(escalax)
+                a += 0.1
+                escalax = str(round(a,2))
+            if escalaxscrolldown.collidepoint(event.pos):
+                a = eval(escalax)
+                if a > 0:
+                    a -= 0.1
+                escalax = str(round(a,2))
+                
+            if escalayscrollup.collidepoint(event.pos):
+                a = eval(escalay)
+                a += 0.1
+                escalay = str(round(a,2))
+            if escalayscrolldown.collidepoint(event.pos):
+                a = eval(escalay)
+                if a > 0:
+                    a -= 0.1
+                escalay = str(round(a,2))
+                
+                
+            if positiveXsizescrollup.collidepoint(event.pos):
+                a = eval(positiveXsize)
+                a += 1
+                positiveXsize = str(a)
+            if positiveXsizescrolldown.collidepoint(event.pos):
+                a = eval(positiveXsize)
+                if a > 0:
+                    a -= 1
+                positiveXsize = str(a)
+            
+            if positiveYsizescrollup.collidepoint(event.pos):
+                a = eval(positiveYsize)
+                a += 1
+                positiveYsize = str(a)
+            if positiveYsizescrolldown.collidepoint(event.pos):
+                a = eval(positiveYsize)
+                if a > 0:
+                    a -= 1
+                positiveYsize = str(a)
+            
+            if negativeXsizescrollup.collidepoint(event.pos):
+                a = eval(negativeXsize)
+                if a < 0:
+                    a += 1
+                negativeXsize = str(a)
+            if negativeXsizescrolldown.collidepoint(event.pos):
+                a = eval(negativeXsize)
+                a -= 1
+                negativeXsize = str(a)
+            
+            if negativeYsizescrollup.collidepoint(event.pos):
+                a = eval(negativeYsize)
+                if a < 0:
+                    a += 1
+                negativeYsize = str(a)
+            if negativeYsizescrolldown.collidepoint(event.pos):
+                a = eval(negativeYsize)
+                a -= 1
+                negativeYsize = str(a)
+            
+            if pontox.collidepoint(event.pos):
+                active7 = True
+            else:
+                active7 = False
+            if pontoy.collidepoint(event.pos):
+                active8 = True
+            else:
+                active8 = False        
+            if confirmar.collidepoint(event.pos):
+                pontos.append([eval(escolhax),eval(escolhay)])
+            
+            
         if event.type == pg.KEYDOWN:
             if active1:
                 if event.key == pg.K_BACKSPACE: 
@@ -265,6 +428,17 @@ while run:
                     escalay = escalay[:-1] 
                 elif event.unicode.isdigit() or isvalid(event.unicode): 
                     escalay += event.unicode
+            if active7:
+                if event.key == pg.K_BACKSPACE: 
+                    escolhax = escolhax[:-1] 
+                elif event.unicode.isdigit() or isvalid(event.unicode): 
+                    escolhax += event.unicode
+            if active8:
+                if event.key == pg.K_BACKSPACE: 
+                    escolhay = escolhay[:-1] 
+                elif event.unicode.isdigit() or isvalid(event.unicode): 
+                    escolhay += event.unicode
+            
     if key[pg.K_p]:
         if pressed == False:
             pressed = True
@@ -287,4 +461,3 @@ while run:
         coords[0] += 0.1
         starting_point[0] += 0.1
     pg.display.update()
-    
