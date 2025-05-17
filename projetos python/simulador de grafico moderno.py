@@ -19,8 +19,8 @@ WHITE = (255,255,255)
 screen = pg.display.set_mode((WIDTH,HEIGHT))
 coords = [300,300]
 canto = pg.Rect(0,0,100,50)
-escalax = '1'
-escalay = '1'
+escalax = '3'
+escalay = '3'
 menu = pg.Rect(0,0,WIDTH/2.5,HEIGHT/1.5)
 sair = pg.Rect(WIDTH-80,0,80,50)
 state = 'grafico'
@@ -114,79 +114,74 @@ def update():
         # pg.draw.rect(screen,GREEN,LinhaXNegativo)
         # pg.draw.rect(screen,VIOLET,LinhaYNegativa)
         # pg.draw.rect(screen,YELLOW,LinhaYPositiva)
-        pg.draw.rect(screen,BLACK,LinhaXpositivo)
-        pg.draw.rect(screen,BLACK,LinhaXNegativo)
-        pg.draw.rect(screen,BLACK,LinhaYNegativa)
-        pg.draw.rect(screen,BLACK,LinhaYPositiva)
-        pg.draw.circle(screen,(RED),(starting_point[0]+4,starting_point[1]+4),8)
-        pg.draw.rect(screen,RED,inicio)
-        
+        coiso1 = eval(escalax)*posix*10
+        coiso2 = eval(escalay)*posiy*10
+        coiso3 = eval(escalax)*negx*10
+        coiso4 = eval(escalay)*negy*10
+        pg.draw.line(screen,BLACK,starting_point,(starting_point[0]+coiso1,starting_point[1]),5)
+        pg.draw.line(screen,BLACK,starting_point,(starting_point[0],starting_point[1]+coiso2),5)
+        pg.draw.line(screen,BLACK,starting_point,(starting_point[0]+coiso3,starting_point[1]),5)
+        pg.draw.line(screen,BLACK,starting_point,(starting_point[0],starting_point[1]+coiso4),5)
+        # pg.draw.rect(screen,BLACK,LinhaXpositivo)
+        # pg.draw.rect(screen,BLACK,LinhaXNegativo)
+        # pg.draw.rect(screen,BLACK,LinhaYNegativa)
+        # pg.draw.rect(screen,BLACK,LinhaYPositiva)
+        pg.draw.circle(screen,(RED),(starting_point[0],starting_point[1]),8)
         pg.draw.rect(screen,(BLACK),canto)
         surface8 = font.render(str('menu'), True, WHITE)
         screen.blit(surface8,(canto.x,canto.y))
         ballsize = 5
-        for i in range(-1*posix,0,1):
+        for i, ponto in enumerate(pontos):
+            escala_x = 10 * eval(escalax)
+            escala_y = 10 * eval(escalay)
+
+            iniciox = ponto[0] * escala_x
+            inicioy = ponto[1] * escala_y
+
+            screen_x = starting_point[0] + iniciox
+            screen_y = starting_point[1] - inicioy  
+
+            if (eval(negativeXsize) <= ponto[0] <= eval(positiveXsize)) and (eval(negativeYsize) <= ponto[1] <= eval(positiveYsize)):
+
+                pg.draw.circle(screen, BLACK, (screen_x, screen_y), ballsize)
+
+                pg.draw.line(screen, BLACK, (starting_point[0], screen_y), (screen_x, screen_y), 3)
+
+                pg.draw.line(screen, BLACK, (screen_x, starting_point[1]), (screen_x, screen_y), 3)
+        # escala1 = i*10*eval(escalax)
+        # escala2 = i*10*eval(escalay)
+        for i in range(0,posix+1):
+            escala1 = abs(i)*10*eval(escalax)
+            escala2 = abs(i)*10*eval(escalay)
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+(i*10*eval(escalax))*-1+10,starting_point[1]+4),ballsize)
+                pg.draw.circle(screen,RED,(starting_point[0]-escala1*-1,starting_point[1]),ballsize)
                 letras = font.render(str(abs(i)), True, BLACK)
-                screen.blit(letras,((starting_point[0]+abs(i)*10*eval(escalax)+10,starting_point[1]+5)))
+                screen.blit(letras,((starting_point[0]+escala1+10,starting_point[1]+5)))
             
-        for i in range(-1*posiy,0,1):
+        for i in range(0,posiy+1):
+            escala1 = abs(i)*10*eval(escalax)
+            escala2 = abs(i)*10*eval(escalay)
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+4,starting_point[1]+i*10*eval(escalay)),ballsize)
+                pg.draw.circle(screen,RED,(starting_point[0],starting_point[1]-escala2),ballsize)
                 letras = font.render(str(-1*i), True, BLACK)
-                screen.blit(letras,((starting_point[0]-25,starting_point[1]+i*10*eval(escalay)-10)))
+                screen.blit(letras,((starting_point[0]-25,starting_point[1]-escala2-10)))
             
         for i in range(0,negx-1,-1):
+            escala1 = abs(i)*10*eval(escalax)
+            escala2 = abs(i)*10*eval(escalay)
             if i != 0:
-                pg.draw.circle(screen,RED,(starting_point[0]+i*10*eval(escalax),starting_point[1]+4),ballsize)
+                pg.draw.circle(screen,RED,(starting_point[0]-escala1,starting_point[1]),ballsize)
                 letras = font.render(str(i), True, BLACK)
-                screen.blit(letras,((starting_point[0]+i*10*eval(escalax),starting_point[1]+5)))
+                screen.blit(letras,((starting_point[0]-escala1,starting_point[1]+5)))
             
         for i in range(-1,negy-1,-1):
-            pg.draw.circle(screen,RED,(starting_point[0]+4,starting_point[1]+abs(i)*10*eval(escalay)+1),ballsize)
+            escala1 = abs(i)*10*eval(escalax)
+            escala2 = abs(i)*10*eval(escalay)
+            pg.draw.circle(screen,RED,(starting_point[0],starting_point[1]+escala2+1),ballsize)
             letras = font.render(str(i), True, BLACK)
             if i != 0 or i != -1:
-                screen.blit(letras,((starting_point[0]-25,starting_point[1]+abs(i)*10*eval(escalay)-5)))
-        
-        for i,ponto in enumerate(pontos):
-            inicio1 = ponto[0]*10*eval(escalax)
-            inicio2 = ponto[1]*10*eval(escalay)
-            if ponto[0] <= eval(positiveXsize) and ponto[1] <= eval(positiveYsize):
-                positive = True
-            else:
-                positive = False
-            
-            if ponto[0] >= eval(negativeXsize) and ponto[1] >= eval(negativeYsize):
-                negative = True
-            else:
-                negative = False
-                
-                
-            if inicio1 > 0 and positive:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1+10,starting_point[1]-inicio2),ballsize)
-            if inicio1 < 0 and negative:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),ballsize)
-                
-            if inicio2 > 0 and positive:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1+10,starting_point[1]-inicio2),ballsize)
-            if inicio2 < 0 and negative:
-                pg.draw.circle(screen,(BLACK),(starting_point[0]+inicio1,starting_point[1]-inicio2),ballsize)
-                
-                
-            if ponto[0] > 0 and positive:
-                linha1 = pg.Rect(starting_point[0],starting_point[1]-inicio2-2,inicio1+7,3)
-                pg.draw.rect(screen,(BLACK),linha1)
-            elif ponto[0] < 0 and negative:
-                linha3 = pg.Rect(starting_point[0]+inicio1-1,starting_point[1],3,abs(inicio2))
-                pg.draw.rect(screen,(BLACK),linha3)
-            if ponto[1] > 0 and positive:
-                linha2 = pg.Rect(starting_point[0]+inicio1+9,starting_point[1]-inicio2,3,inicio2)
-                pg.draw.rect(screen,(BLACK),linha2)
-            elif ponto[1] < 0 and negative:
-                linha4 = pg.Rect(starting_point[0]+inicio1,starting_point[1]-inicio2,abs(inicio1),3)
-                pg.draw.rect(screen,(BLACK),linha4)
-        
+                screen.blit(letras,((starting_point[0]-25,starting_point[1]+escala2-5)))
+       
         if ativar_menu:
             color1 = (0,0,0)
             color2 = (0,0,0)
