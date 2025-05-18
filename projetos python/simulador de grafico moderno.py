@@ -194,6 +194,8 @@ def update():
             textoponto = font.render(str(ponto),True,BLACK)
             pg.draw.circle(screen, BLACK, (screen_x, screen_y), ballsize)
             screen.blit(textoponto,(screen_x, screen_y-10))
+            pg.draw.line(screen,GREEN,(starting_point[0]+escala_x*ponto[0],starting_point[1]-escala_y*ponto[1]),(starting_point[0]+escala_x*ponto2[0],starting_point[1]-escala_y*ponto2[1]),5 )
+        
         if ativar_menu:
             color1 = (0,0,0)
             color2 = (0,0,0)
