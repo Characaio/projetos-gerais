@@ -1,0 +1,118 @@
+button{
+    width: 25vh;
+    height: 10vh;
+}
+
+
+@keyframes grow1{
+    0%{
+        background-color: rgb(255, 0, 0);
+    }
+    100%{
+        background-color: rgb(250, 99, 99);
+    }
+}
+@keyframes grow2{
+    0%{
+        background-color: aquamarine ;
+    }
+    100%{
+        background-color: rgb(205, 245, 232);
+    }
+}
+@keyframes grow3{
+    0%{
+        background-color: rgb(221, 121, 235);
+    }
+    100%{
+        background-color: rgb(242, 146, 255);
+    }
+}
+@keyframes grow4{
+    0%{
+        background-color: cadetblue;
+    }
+    100%{
+        background-color: rgb(159, 183, 184);
+    }
+}
+@keyframes grow5{
+    0%{
+        background-color: rgb(31, 165, 218);
+    }
+    100%{
+        background-color: rgb(138, 196, 219);
+    }
+}
+
+#primeiro{
+    background-color: rgb(255, 0, 0);
+    
+}
+#primeiro:hover{
+    animation: grow1 0.5s ease-in-out forwards;
+}
+#segundo{
+    background-color: aquamarine;
+    
+}
+#segundo:hover{
+    animation: grow2 0.5s ease-in-out forwards;
+}
+#terceiro{
+    background-color: rgb(221, 121, 235);
+    position: absolute;
+    right: 0;
+
+}
+#terceiro:hover{
+    animation: grow3 0.5s ease-in-out forwards;
+}
+#quarto{
+    background-color: cadetblue;
+    position: absolute;
+    right: 0;
+}
+#quarto:hover{
+    animation: grow4 0.5s ease-in-out forwards;
+}
+#mudar{
+    background-color: rgb(31, 165, 218);
+}
+#mudar:hover{
+    animation: grow5 0.5s ease-in-out forwards;
+}
+#mae2{
+    width: 50%;
+    
+    margin: auto;
+    text-transform: capitalize;
+}
+#mae{
+    position: relative;
+    border-color: black;
+    border-style: solid;
+    
+}
+#pergunta{
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(193, 193, 252);
+}
+#tema{
+    text-align: center;
+}
+#sim{
+    background-color: greenyellow;
+}
+#nao{
+    background-color: red;
+}
+#silva1{
+    display: flex;
+}
+#silva2{
+    display: flex;
+}
