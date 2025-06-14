@@ -3,6 +3,7 @@
 const mudar = document.getElementById("mudar")
         const confirmar = document.getElementById('confirmar')
         const mae = document.getElementById('mae')
+        const mae2 = document.getElementById('mae2')
         let acertos = 0
         let erros = 0
         // let coisas = [
@@ -117,7 +118,7 @@ const mudar = document.getElementById("mudar")
 
                 })
                 nao.addEventListener("click", () =>{
-                    confirmar.innerText = "ent sai daqui corno"
+                    window.location.replace("../paginainicial.html")
                 })
             }
            
