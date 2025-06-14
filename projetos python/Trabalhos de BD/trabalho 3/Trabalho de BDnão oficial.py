@@ -9,6 +9,7 @@ class App:
         self.root.title("Registro de Usuários")  # Título da janela
         for i in range(6):
             self.root.grid_columnconfigure(i,weight=1)
+            
         self.dados = []  # Lista que vai armazenar tuplas (login, senha)
         self.aba = 'Livros'
         
@@ -23,7 +24,7 @@ class App:
         self.abas = ['Livros','Autores','Livrarias']
         
         self.escolha= {
-            'livros_info_geral':('Nome do Livro:',"Autor do Livro:","Editora do Livro:","Livraria do Livro:"),
+            'Livros_info_geral':('Nome do Livro:',"Autor do Livro:","Editora do Livro:","Livraria do Livro:"),
             'Autores_info_geral':("Nome do Autor:","Idade do Autor:","Editora do Autor:","Livros do Autor:"),
             'Editora_info_geral':("Nome da Livraria:","Dono da Livraria:","Telefone da Livraria:","quantidade de livros:")
         }
@@ -59,12 +60,11 @@ class App:
         self.entrada4.grid(row=3, column=0, padx=5, pady=5)
         
         self.carregar_dados()
-
-        # Botão "Registrar" que chama a função registrar_usuario quando clicado
-        self.btn_registrar = tk.Button(root, text="Registrar", command=self.registrar_usuario)
-        self.btn_registrar.grid(row=4, column=0, pady=10)
-
-        self.escolha_de_dados = ttk.Combobox(self.root, values=self.abas)
+        
+        self.escolha_de_dados_texto = tk.Label(root,text='Aba Escolhida:',justify='right')
+        self.escolha_de_dados_texto.grid(row=4,column=5,sticky='e')
+        
+        self.escolha_de_dados = ttk.Combobox(root, values=self.abas)
         self.escolha_de_dados.grid(row=4,column=6,pady=10)
 
         self.escolha_de_dados.set('Livros')
@@ -72,11 +72,18 @@ class App:
         # Listbox (caixa de lista) para exibir os usuários registrados
         
         self.colunas = self.get_columns()
+        
         self.minha_arvore = ttk.Treeview(root,columns=self.colunas,show='headings')
         self.minha_arvore.grid(row=6,column=0,columnspan=8,sticky='we',padx=5,pady=5)
 
+        self.btn_registrar = tk.Button(root, text="Registrar", command=self.registrar_usuario)
+        self.btn_registrar.grid(row=4, column=0)
+        
+        self.btn_apagar_item = tk.Button(root,text='apagar item',command=self.deletar_item)
+        self.btn_apagar_item.grid(row=5,column=1,pady=10)
+        
         self.btn_apagar_tudo = tk.Button(root, text="apagar tudo", command=self.apagar_tudo)
-        self.btn_apagar_tudo.grid(row=5, column=0, pady=10)
+        self.btn_apagar_tudo.grid(row=5, column=0)
   
         self.mudar_aba()
         self.decidir_entradas()
@@ -111,7 +118,9 @@ class App:
             ngcs = []
             for coisa in coisas:
                 ngc = []
-                ngc = coisa.strip().split('|')
+                ngc = coisa.strip()
+                ngc = ngc.split('|')
+                ngc.remove('')
                 ngcs.append(tuple(ngc))
             
             #print(ngcs)
@@ -222,18 +231,39 @@ class App:
         self.livraria_do_livro.delete(0, tk.END)
     
     def salvar(self,arquivo,tipo_de_item):
-        print(f'salavamento individual {tipo_de_item}')
+        #print(f'salavamento individual {tipo_de_item}')
         with open(arquivo,'w') as file:
             temp2 = ''
             for linha in tipo_de_item:
+                
+                #print(f'linha{linha}')
                 for item in linha:
-                    temp2 += item + '|'
+                    item.strip()
+                    if item:
+                        #print(f'item: {item}')
+                        temp2 += item + '|'
                 #print(temp2)
                 file.write(temp2 + '\n')
                 temp2 = ''
-                
+    
+    def salvar_dados_novos(self):
+        ngcs = []
+        for line in self.minha_arvore.get_children():
+            
+            for value in self.minha_arvore.item(line)['values']:
+                ngc = []
+                if value:
+                    value = value.strip()
+                    ngc.append(value)
+                    ngcs.append(tuple(ngc))
+        return ngcs
+    
     def salvar_arquivo(self):
         print('salvando arquivos')
+        print(f'livros: {self.livros}')
+        print(f'autores: {self.autores}')
+        print(f'Livrarias {self.livrarias}')
+        
         if os.path.exists(self.livros_arquivo):
             self.salvar(self.livros_arquivo,self.livros)
 
@@ -252,7 +282,10 @@ class App:
             os.remove(self.autores_arquivo)
         if os.path.exists(self.livrarias_arquivo):
             os.remove(self.livrarias_arquivo)
-            
+        
+        self.minha_arvore.delete(*self.minha_arvore.get_children())
+        self.livros,self.livrarias,self.autores = '','',''
+    
     def sair(self):
         if messagebox.askokcancel("quit",'salvar antes de sair?'):
             self.salvar_arquivo()
@@ -260,10 +293,27 @@ class App:
         else:
             self.root.destroy()
             
-    def deletar_usuario(self):
+    def deletar_item(self):
         print('deletando usuario')
         selecionado = self.minha_arvore.selection()
+        itens = []
         self.minha_arvore.delete(*selecionado)
+        for linha in self.minha_arvore.get_children():
+            #print('AAAAAAAAAAAAAAA')
+            coiso = []
+            for item in self.minha_arvore.item(linha)['values']:
+                coiso.append(item)
+                #print(f'item {item}')
+            itens.append(tuple(coiso))
+            
+        if self.aba == 'Livros':
+            self.livros = itens
+        if self.aba == 'Autores':
+            self.autores = itens
+        if self.aba == 'Livrarias':
+            self.livrarias = itens
+            
+       # print(f'baguio brabo{itens}')
         
         self.salvar_arquivo()
         
