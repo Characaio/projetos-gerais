@@ -35,17 +35,17 @@ class App:
         
 
         # Campo de entrada para o login
-        self.nome_do_livro = tk.Entry(root)
-        self.nome_do_livro.grid(row=0, column=1, padx=5, pady=5)
+        self.entrada_info1 = tk.Entry(root)
+        self.entrada_info1.grid(row=0, column=1, padx=5, pady=5)
 
-        self.autor_do_livro = tk.Entry(root)
-        self.autor_do_livro.grid(row=1, column=1, padx=5, pady=5)
+        self.entrada_info2 = tk.Entry(root)
+        self.entrada_info2.grid(row=1, column=1, padx=5, pady=5)
         
-        self.editora_do_livro = tk.Entry(root)
-        self.editora_do_livro.grid(row=2, column=1, padx=5, pady=5)
+        self.entrada_info3 = tk.Entry(root)
+        self.entrada_info3.grid(row=2, column=1, padx=5, pady=5)
         
-        self.livraria_do_livro = tk.Entry(root)
-        self.livraria_do_livro.grid(row=3, column=1, padx=5, pady=5)
+        self.entrada_info4 = tk.Entry(root)
+        self.entrada_info4.grid(row=3, column=1, padx=5, pady=5)
         
         self.entrada1 = tk.Label(root, text="")
         self.entrada1.grid(row=0, column=0, padx=5, pady=5)
@@ -59,37 +59,202 @@ class App:
         self.entrada4 = tk.Label(root, text="")
         self.entrada4.grid(row=3, column=0, padx=5, pady=5)
         
-        self.carregar_dados()
+        self.entradas = [self.entrada_info1,self.entrada_info2,self.entrada_info3,self.entrada_info4]
+        self.entradas_labels = [self.entrada1,self.entrada2,self.entrada3,self.entrada4]
+        
         
         self.escolha_de_dados_texto = tk.Label(root,text='Aba Escolhida:',justify='right')
         self.escolha_de_dados_texto.grid(row=4,column=5,sticky='e')
         
         self.escolha_de_dados = ttk.Combobox(root, values=self.abas)
         self.escolha_de_dados.grid(row=4,column=6,pady=10)
-
         self.escolha_de_dados.set('Livros')
         self.escolha_de_dados.bind("<<ComboboxSelected>>",self.mudar_aba_placeholder)
+        
+        
+        
+        
+        
+        
         # Listbox (caixa de lista) para exibir os usuários registrados
         
         self.colunas = self.get_columns()
         
         self.minha_arvore = ttk.Treeview(root,columns=self.colunas,show='headings')
+        self.minha_arvore.bind("<<TreeviewSelect>>",self.socorro)
+        self.minha_arvore.bind("<Button-1>",self.verificar_clique)
         self.minha_arvore.grid(row=6,column=0,columnspan=8,sticky='we',padx=5,pady=5)
 
+        
+        
+        
+        
         self.btn_registrar = tk.Button(root, text="Registrar", command=self.registrar_usuario)
         self.btn_registrar.grid(row=4, column=0)
+        
+        self.btn_apagar_tudo = tk.Button(root, text="apagar tudo", command=self.apagar_tudo)
+        self.btn_apagar_tudo.grid(row=5, column=0)
         
         self.btn_apagar_item = tk.Button(root,text='apagar item',command=self.deletar_item)
         self.btn_apagar_item.grid(row=5,column=1,pady=10)
         
-        self.btn_apagar_tudo = tk.Button(root, text="apagar tudo", command=self.apagar_tudo)
-        self.btn_apagar_tudo.grid(row=5, column=0)
-  
+        self.btn_editar_item = tk.Button(root,text='editar item',command=self.editar_item)
+        self.btn_editar_item.grid(row=5,column=2,pady=10)
+        
+        self.arquivos_base = tk.Button(root,text='criar arquivos base',command=self.criar_arquivos_base)
+        self.arquivos_base.grid(row=5,column=3,pady=10)
+        
+        self.carregar_dados()
+        
+        self.escolha_de_filtro_texto = tk.Label(root,text='flitrar por:',justify='right')
+        self.escolha_de_filtro_texto.grid(row=5,column=5,sticky='e')
+        
+        self.escolha_de_filtro = ttk.Combobox(root, values='')
+        self.escolha_de_filtro.set("")
+        self.escolha_de_filtro.bind("<<ComboboxSelected>>",self.mudar_de_filtro)
+        self.escolha_de_filtro.set("Nenhum")
+        self.escolha_de_filtro.grid(row=5,column=6,pady=10)
+
+        self.escolha_SLA_texto = tk.Label(root,text='socorro')
+        self.escolha_SLA_texto.grid(row=0,column=4,pady=10,sticky='e')
+        
+        self.escolha_SLA = ttk.Combobox(root,values=self.get_columns())
+        self.escolha_SLA.bind("<<ComboboxSelected>>",self.mudar_escolhar_placeholder)
+        self.escolha_SLA.grid(row=0,column=5,pady=10)
+        
+        self.indice = 0
+        
         self.mudar_aba()
         self.decidir_entradas()
-
+        self.update_lista()
     
+        
+    def mudar_escolhar_placeholder(self,event):
+        self.mudar_escolhar()
+    
+    def mudar_escolhar(self):
+        print('socorro')
+        temp = []
+        self.indice = self.converter_escolha_para_indice()
+        #self.escolha_de_filtro.config(values=self.escolha_SLA.get())
+        for item in self.extrair_valores_dos_itens():
+            print(f'não {item}')
+            temp.append(item[self.indice])
+        print(temp)
+        self.escolha_de_filtro.config(values=temp)
+    
+    def get_seletores(self):
+        temp = ['Nenhum']
+        if self.aba == 'Livros':
+            for livro in self.livros:
+                print(f'1: {livro[2]}')
+                temp.append(livro[2])
+                
+        if self.aba == 'Autores':
+            for autor in self.autores:
+                print(f'2: {autor[2]}')
+                temp.append(autor[2])
+                
+        if self.aba == 'Livrarias':
+            for livraria in self.livrarias:
+                print(f'3: {livraria[2]}')
+                temp.append(livraria[2])
+                
+        return temp
+    
+    def converter_escolha_para_indice(self):
+        valor = self.escolha_SLA.get()
+        print(f'self.escolha.items: {self.escolha.items()}')
+        print(f'base: {valor}')
+        
+        #print(f'valor:  {self.escolha_SLA.get()}')
+        for key,value in self.escolha.items():
+            print(key,value)
+            for i,valorzin in enumerate(value):
+                if valorzin == valor:
+                    self.indice = i
+                    return i
+    
+    def mudar_de_filtro(self,event):
+        valor = self.escolha_de_filtro.get()
+        itens = []
+        if valor == 'Nenhum':
+            self.update_lista()
+            return
+        
+        valores = self.extrair_valores_dos_itens()
+        
+        print(f'extrair valores: {valores}')
+        print(f'valor do combobox {valor}')
+        
+        for valorzin in valores:
+            print(f'brabo: {valorzin[self.converter_escolha_para_indice()]}')
+            if valor in valorzin[self.converter_escolha_para_indice()]:
+                print('EU TO AQUIIIIIII')
+                itens.append(valorzin)
+                self.minha_arvore.delete(*self.minha_arvore.get_children())
+                self.minha_arvore.configure(columns=self.get_columns())
+        print(itens)
+        self.mudar_aba()
+        
+        for i in range(len(itens)):
+            self.minha_arvore.insert('','end',values=itens[i])
+        
+                
+                
+                
+    def verificar_clique(self,event):
+        region = self.minha_arvore.identify("region",event.x,event.y)
+        
+        if region != "cell":
+            self.minha_arvore.selection_remove(self.minha_arvore.selection())
+            self.limpar_entradas()
+            
+    def criar_arquivos_base(self):
+        self.apagar_tudo()
+        self.carregar_dados()
+        
+    def socorro(self,event):
+        selecionado = self.minha_arvore.selection()
+        if selecionado:
+            #print(selecionado)
+            valores = self.minha_arvore.item(selecionado)['values']
+            #print(f'oi: {valores}')
+            #print(f'get info: {self.get_info()}')
+            #self.minha_arvore.item(selecionado[0],values=self.get_info())
+            self.limpar_entradas()
+            values = []
+            for i,entrada in enumerate(self.entradas):
+                isso = self.minha_arvore.item(selecionado)['values']
+                entrada.insert(0,isso[i])
+            
+    def editar_item(self):
+        pass
+        #if self.entrada_info1.get() and self.entrada_info2.get() and self.entrada_info3.get() and self.entrada_info4.get():
+        selecionado = self.minha_arvore.selection()
+        if selecionado:
+            print(selecionado)
+            valores = self.minha_arvore.item(selecionado)['values']
+            print(f'oi: {valores}')
+            print(f'get info: {self.get_info()}')
+            self.minha_arvore.item(selecionado[0],values=self.get_info())
+            self.limpar_entradas()
+            
+            values = self.extrair_valores_dos_itens()
+                
+            if self.aba == 'Livros':
+                self.livros = values
+                print(f'baguio brabasso{self.livros}')
+            if self.aba == 'Autores':
+                self.autores = values
+                print(f'baguio brabasso{self.autores}')
+            if self.aba == 'Livrarias':
+                self.livrarias = values
+                print(f'baguio brabasso{self.livrarias}')
+            #quit()
+            
     def get_columns(self):
+        pass
         if self.aba == 'Livros':
             return self.escolha['Livros_info_geral']
         if self.aba == 'Autores':
@@ -97,20 +262,19 @@ class App:
         if self.aba == 'Livrarias':
             return self.escolha['Editora_info_geral']
 
-    def mudar_nomes(self,tipo):
-        self.entrada1.config(text=self.escolha[tipo][0])
-        self.entrada2.config(text=self.escolha[tipo][1])
-        self.entrada3.config(text=self.escolha[tipo][2])
-        self.entrada4.config(text=self.escolha[tipo][3])
+    def mudar_nomes(self,tipo,quantidade):
+        for i in range(quantidade):
+            self.entradas_labels[i].config(text=self.escolha[tipo][i])
+        
 
     def decidir_entradas(self):
         
         if self.aba == 'Livros':
-            self.mudar_nomes('Livros_info_geral')
+            self.mudar_nomes('Livros_info_geral',len(self.escolha['Livros_info_geral']))
         if self.aba == 'Autores':
-            self.mudar_nomes('Autores_info_geral')
+            self.mudar_nomes('Autores_info_geral',len(self.escolha['Autores_info_geral']))
         if self.aba == 'Livrarias':
-            self.mudar_nomes('Editora_info_geral')
+            self.mudar_nomes('Editora_info_geral',len(self.escolha['Editora_info_geral']))
             
     def carregar_um_dado(self,arquivo):
         with open(arquivo,'r') as file:
@@ -122,8 +286,6 @@ class App:
                 ngc = ngc.split('|')
                 ngc.remove('')
                 ngcs.append(tuple(ngc))
-            
-            #print(ngcs)
             return ngcs
         
     def carregar_dados(self):
@@ -134,6 +296,7 @@ class App:
             self.livros = temp
             self.criar_arquivo(self.livros_arquivo,temp)
 
+
         if os.path.exists(self.autores_arquivo):
             self.autores = self.carregar_um_dado(self.autores_arquivo)
         else:
@@ -141,12 +304,14 @@ class App:
             self.autores = temp
             self.criar_arquivo(self.autores_arquivo,temp)
 
+
         if os.path.exists(self.livrarias_arquivo):
            self.livrarias = self.carregar_um_dado(self.livrarias_arquivo)
         else:
             temp = [('toninho do grau','tonin','idoso','lerdo'),('tonhão do caminhão','tonhão','novo','rapido')]
             self.livrarias = temp
             self.criar_arquivo(self.livrarias_arquivo,temp)
+        self.update_lista()
 
     def criar_arquivo(self,arquivo,temp):
         print(f'criar arquivo de {arquivo}')
@@ -155,11 +320,9 @@ class App:
             for linha in temp:
                 for item in linha:
                     temp2 += item + '|'
-                #print(temp2)
                 file.write(temp2 + '\n')
                 temp2 = ''
                 
-    # Função que registra o usuário
     def update_lista(self):
         print('atualizando a lista')
         print(self.aba)
@@ -181,39 +344,54 @@ class App:
         self.colunas = self.get_columns()
         self.minha_arvore.delete(*self.minha_arvore.get_children())
         self.minha_arvore.configure(columns=self.colunas)
-        self.minha_arvore.heading(self.colunas[0],text=self.colunas[0])
-        self.minha_arvore.heading(self.colunas[1],text=self.colunas[1])
-        self.minha_arvore.heading(self.colunas[2],text=self.colunas[2])
-        self.minha_arvore.heading(self.colunas[3],text=self.colunas[3])
-        
-        
-        self.update_lista()
+        for i in range(4):
+            self.minha_arvore.heading(self.colunas[i],text=self.colunas[i])
+        try:
+            self.escolha_SLA.config(values=self.get_columns())
+        except Exception as e:
+            print(e)
+        #self.update_lista()
         self.decidir_entradas()
-        
+        if self.escolha_de_filtro.get() == '':
+            self.escolha_de_filtro.set("Nenhum")
     def mudar_aba_placeholder(self,event):
         self.mudar_aba()
+        self.update_lista()
         
-
+    def limpar_entradas(self):
+        self.entrada_info1.delete(0, tk.END)
+        self.entrada_info2.delete(0, tk.END)
+        self.entrada_info3.delete(0, tk.END)
+        self.entrada_info4.delete(0, tk.END)
+        
+    def get_info(self):
+        info1 = self.entrada_info1.get().strip()
+        info2 = self.entrada_info2.get().strip()
+        info3 = self.entrada_info3.get().strip()
+        info4 = self.entrada_info4.get().strip()
+        return (info1,info2,info3,info4)
+    
     def registrar_usuario(self):
         print('registrando o usuario')
-        # Captura os valores dos campos de entrada
-        nome_do_livro = self.nome_do_livro.get().strip()
-        autor_do_livro = self.autor_do_livro.get().strip()
-        editora_do_livro = self.editora_do_livro.get().strip()
-        livraria_do_livro = self.livraria_do_livro.get().strip()
+        info1,info2,info3,info4 = self.get_info()
 
-        # Verifica se os campos estão vazios
-        if not nome_do_livro or not autor_do_livro or not editora_do_livro or not livraria_do_livro:
+        if not info1 or not info2 or not info3 or not info4:
             messagebox.showwarning("Erro", "Algo ta vazio vagabundo")
             return
+        if self.aba == 'Livros':
+            if any(u[0] == info1 for u in self.livros):
+                messagebox.showwarning("Erro", "Livro já cadastrado seu vagabundo")
+                return
+        if self.aba == 'Autores':
+            if any(u[0] == info1 for u in self.autores):
+                messagebox.showwarning("Erro", "autor já cadastrado seu vagabundo")
+                return
+        if self.aba == 'Livrarias':
+            if any(u[0] == info1 for u in self.livrarias):
+                messagebox.showwarning("Erro", "Livraria já cadastrado seu vagabundo")
+                return
 
-        # Verifica se o login já está na lista de usuários
-        if any(u[0] == nome_do_livro for u in self.dados):
-            messagebox.showwarning("Erro", "Livro já cadastrado seu vagabundo")
-            return
-
-        # Adiciona o usuário à lista (como uma tupla)
-        item = (nome_do_livro,autor_do_livro,editora_do_livro,livraria_do_livro)
+        item = (info1,info2,info3,info4)
         if self.aba == 'Livros':
             self.livros.append(item)
         if self.aba == 'Autores':
@@ -221,48 +399,46 @@ class App:
         if self.aba == 'Livrarias':
             self.livrarias.append(item)
 
-        # Atualiza a lista na interface
-        self.atualizar_lista()
+        self.update_lista()
 
-        # Limpa os campos de entrada
-        self.nome_do_livro.delete(0, tk.END)
-        self.autor_do_livro.delete(0, tk.END)
-        self.editora_do_livro.delete(0, tk.END)
-        self.livraria_do_livro.delete(0, tk.END)
+        self.limpar_entradas()
+    
     
     def salvar(self,arquivo,tipo_de_item):
         #print(f'salavamento individual {tipo_de_item}')
         with open(arquivo,'w') as file:
-            temp2 = ''
             for linha in tipo_de_item:
-                
-                #print(f'linha{linha}')
-                for item in linha:
-                    item.strip()
-                    if item:
-                        #print(f'item: {item}')
-                        temp2 += item + '|'
-                #print(temp2)
-                file.write(temp2 + '\n')
                 temp2 = ''
-    
-    def salvar_dados_novos(self):
-        ngcs = []
-        for line in self.minha_arvore.get_children():
-            
-            for value in self.minha_arvore.item(line)['values']:
-                ngc = []
+                for item in linha:
+                    str(item).strip()
+                    if item:
+                        temp2 += item + '|'
+                file.write(temp2 + '\n')
+                
+                
+    def extrair_valores_dos_itens(self):
+        self.update_lista()
+        values = []
+        for item in self.minha_arvore.get_children():
+            baguio = []
+            for value in self.minha_arvore.item(item)['values']:
                 if value:
-                    value = value.strip()
-                    ngc.append(value)
-                    ngcs.append(tuple(ngc))
+                    
+                    str(value).strip()
+                    baguio.append(value)
+            values.append(tuple(baguio))
+        return values
+    
+    def salvar_dados_novos(self):   
+        ngcs = self.extrair_valores_dos_itens()
         return ngcs
     
     def salvar_arquivo(self):
+        #print(f'(NGC BRABOOOOOOOO :{self.salvar_dados_novos()})')
         print('salvando arquivos')
         print(f'livros: {self.livros}')
-        print(f'autores: {self.autores}')
-        print(f'Livrarias {self.livrarias}')
+        #print(f'autores: {self.autores}')
+        #print(f'Livrarias {self.livrarias}')
         
         if os.path.exists(self.livros_arquivo):
             self.salvar(self.livros_arquivo,self.livros)
@@ -272,10 +448,12 @@ class App:
         
         if os.path.exists(self.livrarias_arquivo):
             self.salvar(self.livrarias_arquivo,self.livrarias)
+        #print(f'(NGC BRABOOOOOOOO :{self.salvar_dados_novos()})')
         
     def apagar_tudo(self):
         print('apagando tudo')
         self.livros,self.autores,self.livrarias = '','',''
+        
         if os.path.exists(self.livros_arquivo):
             os.remove(self.livros_arquivo)
         if os.path.exists(self.autores_arquivo):
@@ -284,8 +462,9 @@ class App:
             os.remove(self.livrarias_arquivo)
         
         self.minha_arvore.delete(*self.minha_arvore.get_children())
-        self.livros,self.livrarias,self.autores = '','',''
-    
+        
+        self.limpar_entradas()
+        
     def sair(self):
         if messagebox.askokcancel("quit",'salvar antes de sair?'):
             self.salvar_arquivo()
@@ -299,11 +478,9 @@ class App:
         itens = []
         self.minha_arvore.delete(*selecionado)
         for linha in self.minha_arvore.get_children():
-            #print('AAAAAAAAAAAAAAA')
             coiso = []
             for item in self.minha_arvore.item(linha)['values']:
                 coiso.append(item)
-                #print(f'item {item}')
             itens.append(tuple(coiso))
             
         if self.aba == 'Livros':
@@ -313,24 +490,13 @@ class App:
         if self.aba == 'Livrarias':
             self.livrarias = itens
             
-       # print(f'baguio brabo{itens}')
         
         self.salvar_arquivo()
+        self.limpar_entradas()
         
-    # Função que atualiza a Listbox com os dados dos usuários
-    def atualizar_lista(self):
-        for login in self.dados:
-            # Mostra login e senha na mesma linha
-            if self.aba == 'Livros':
-                self.livros.append((login))
-            if self.aba == 'Autores':
-                self.autores.append((login))
-            if self.aba == 'Livrarias':
-                self.livrarias.append((login))
-        self.update_lista()
+    
         
-        self.dados = []
-
+        
 # Código principal para iniciar a aplicação
 if __name__ == "__main__":
     root = tk.Tk()      # Cria a janela principal
