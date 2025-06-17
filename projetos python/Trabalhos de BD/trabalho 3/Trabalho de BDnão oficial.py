@@ -10,13 +10,14 @@ class App:
         for i in range(6):
             self.root.grid_columnconfigure(i,weight=1)
             
-        self.dados = []  # Lista que vai armazenar tuplas (login, senha)
         self.aba = 'Livros'
         
         self.pasta_atual = os.path.dirname(os.path.abspath(__file__))
         self.livros_arquivo = os.path.join(self.pasta_atual,'livros.txt')
         self.autores_arquivo = os.path.join(self.pasta_atual,'autores.txt')
         self.livrarias_arquivo = os.path.join(self.pasta_atual,'livrarias.txt')
+        
+        self.indice = 0
         
         self.livros = ''
         self.autores = ''
@@ -62,20 +63,6 @@ class App:
         self.entradas = [self.entrada_info1,self.entrada_info2,self.entrada_info3,self.entrada_info4]
         self.entradas_labels = [self.entrada1,self.entrada2,self.entrada3,self.entrada4]
         
-        
-        self.escolha_de_dados_texto = tk.Label(root,text='Aba Escolhida:',justify='right')
-        self.escolha_de_dados_texto.grid(row=4,column=5,sticky='e')
-        
-        self.escolha_de_dados = ttk.Combobox(root, values=self.abas)
-        self.escolha_de_dados.grid(row=4,column=6,pady=10)
-        self.escolha_de_dados.set('Livros')
-        self.escolha_de_dados.bind("<<ComboboxSelected>>",self.mudar_aba_placeholder)
-        
-        
-        
-        
-        
-        
         # Listbox (caixa de lista) para exibir os usuários registrados
         
         self.colunas = self.get_columns()
@@ -85,10 +72,6 @@ class App:
         self.minha_arvore.bind("<Button-1>",self.verificar_clique)
         self.minha_arvore.grid(row=6,column=0,columnspan=8,sticky='we',padx=5,pady=5)
 
-        
-        
-        
-        
         self.btn_registrar = tk.Button(root, text="Registrar", command=self.registrar_usuario)
         self.btn_registrar.grid(row=4, column=0)
         
@@ -106,77 +89,66 @@ class App:
         
         self.carregar_dados()
         
-        self.escolha_de_filtro_texto = tk.Label(root,text='flitrar por:',justify='right')
-        self.escolha_de_filtro_texto.grid(row=5,column=5,sticky='e')
+        self.escolha_de_dados_texto = tk.Label(root,text='Aba Escolhida:',justify='right')
+        self.escolha_de_dados_texto.grid(row=3,column=5,sticky='e')
         
-        self.escolha_de_filtro = ttk.Combobox(root, values='')
-        self.escolha_de_filtro.set("")
-        self.escolha_de_filtro.bind("<<ComboboxSelected>>",self.mudar_de_filtro)
-        self.escolha_de_filtro.set("Nenhum")
-        self.escolha_de_filtro.grid(row=5,column=6,pady=10)
+        self.escolha_de_dados = ttk.Combobox(root, values=self.abas)
+        self.escolha_de_dados.grid(row=3,column=6,pady=10)
+        self.escolha_de_dados.set('Livros')
+        self.escolha_de_dados.bind("<<ComboboxSelected>>",self.mudar_aba_placeholder)
+        
+        self.filtro_interno_texto = tk.Label(root,text='flitrar pelo item:',justify='right')
+        self.filtro_interno_texto.grid(row=5,column=5,sticky='e')
+        
+        self.filtro_interno = ttk.Combobox(root, values='Nenhum')
+        self.filtro_interno.bind("<<ComboboxSelected>>",self.mudar_de_filtro)
+        self.filtro_interno.set("Nenhum")
+        self.filtro_interno.grid(row=5,column=6,pady=10)
 
-        self.escolha_SLA_texto = tk.Label(root,text='socorro')
-        self.escolha_SLA_texto.grid(row=0,column=4,pady=10,sticky='e')
+        self.escolha_do_filtro_texto = tk.Label(root,text='Escolha o tipo de filtro')
+        self.escolha_do_filtro_texto.grid(row=4,column=5,pady=10,sticky='e')
         
-        self.escolha_SLA = ttk.Combobox(root,values=self.get_columns())
-        self.escolha_SLA.bind("<<ComboboxSelected>>",self.mudar_escolhar_placeholder)
-        self.escolha_SLA.grid(row=0,column=5,pady=10)
-        
-        self.indice = 0
+        self.escolha_do_filtro = ttk.Combobox(root)
+        self.escolha_do_filtro.bind("<<ComboboxSelected>>",self.mudar_filtro_interno_placeholder)
+        self.escolha_do_filtro.set("Nenhum")
+        self.escolha_do_filtro.grid(row=4,column=6,pady=10)
         
         self.mudar_aba()
         self.decidir_entradas()
         self.update_lista()
     
-        
-    def mudar_escolhar_placeholder(self,event):
-        self.mudar_escolhar()
+    def mudar_filtro_interno_placeholder(self,event):
+        self.filtro_interno.set('Nenhum')
+        self.mudar_filtro_interno()
     
-    def mudar_escolhar(self):
-        print('socorro')
-        temp = []
-        self.indice = self.converter_escolha_para_indice()
-        #self.escolha_de_filtro.config(values=self.escolha_SLA.get())
-        for item in self.extrair_valores_dos_itens():
-            print(f'não {item}')
-            temp.append(item[self.indice])
-        print(temp)
-        self.escolha_de_filtro.config(values=temp)
-    
-    def get_seletores(self):
+    def mudar_filtro_interno(self):
         temp = ['Nenhum']
-        if self.aba == 'Livros':
-            for livro in self.livros:
-                print(f'1: {livro[2]}')
-                temp.append(livro[2])
-                
-        if self.aba == 'Autores':
-            for autor in self.autores:
-                print(f'2: {autor[2]}')
-                temp.append(autor[2])
-                
-        if self.aba == 'Livrarias':
-            for livraria in self.livrarias:
-                print(f'3: {livraria[2]}')
-                temp.append(livraria[2])
-                
-        return temp
-    
-    def converter_escolha_para_indice(self):
-        valor = self.escolha_SLA.get()
-        print(f'self.escolha.items: {self.escolha.items()}')
-        print(f'base: {valor}')
         
-        #print(f'valor:  {self.escolha_SLA.get()}')
+        if self.escolha_do_filtro.get() == 'Nenhum':
+            self.filtro_interno.config(values='Nenhum')
+            self.filtro_interno.set('Nenhum')
+            self.update_lista()
+            return
+        
+        self.indice = self.encontrar_indice_do_filtro()
+
+        for item in self.extrair_valores_dos_itens():
+            if item[self.indice] not in temp:
+                temp.append(item[self.indice])
+            
+        self.filtro_interno.config(values=temp)
+    
+    def encontrar_indice_do_filtro(self):
+        valor_do_filtro = self.escolha_do_filtro.get()
         for key,value in self.escolha.items():
-            print(key,value)
             for i,valorzin in enumerate(value):
-                if valorzin == valor:
+                #se achar o valor, retorne o indice
+                if valorzin == valor_do_filtro:
                     self.indice = i
                     return i
-    
+
     def mudar_de_filtro(self,event):
-        valor = self.escolha_de_filtro.get()
+        valor = self.filtro_interno.get()
         itens = []
         if valor == 'Nenhum':
             self.update_lista()
@@ -184,17 +156,17 @@ class App:
         
         valores = self.extrair_valores_dos_itens()
         
-        print(f'extrair valores: {valores}')
-        print(f'valor do combobox {valor}')
+        # print(f'extrair valores: {valores}')
+        # print(f'valor do combobox {valor}')
         
         for valorzin in valores:
-            print(f'brabo: {valorzin[self.converter_escolha_para_indice()]}')
-            if valor in valorzin[self.converter_escolha_para_indice()]:
-                print('EU TO AQUIIIIIII')
+            #print(f'brabo: {valorzin[self.encontrar_indice_do_filtro()]}')
+            if valor in valorzin[self.encontrar_indice_do_filtro()]:
+                #print('EU TO AQUIIIIIII')
                 itens.append(valorzin)
                 self.minha_arvore.delete(*self.minha_arvore.get_children())
                 self.minha_arvore.configure(columns=self.get_columns())
-        print(itens)
+        #print(itens)
         self.mudar_aba()
         
         for i in range(len(itens)):
@@ -254,7 +226,6 @@ class App:
             #quit()
             
     def get_columns(self):
-        pass
         if self.aba == 'Livros':
             return self.escolha['Livros_info_geral']
         if self.aba == 'Autores':
@@ -344,18 +315,31 @@ class App:
         self.colunas = self.get_columns()
         self.minha_arvore.delete(*self.minha_arvore.get_children())
         self.minha_arvore.configure(columns=self.colunas)
-        for i in range(4):
+        
+        
+        # self.filtro_interno.config(values=['Nenhum'])
+        # self.escolha_do_filtro.config(values=['Nenhum'])
+        
+        for i in range(len(self.colunas)):
             self.minha_arvore.heading(self.colunas[i],text=self.colunas[i])
+            
         try:
-            self.escolha_SLA.config(values=self.get_columns())
+            temp = ['Nenhum']
+            for coluna in self.get_columns():
+                temp.append(coluna)
+            self.escolha_do_filtro.config(values=temp)
         except Exception as e:
             print(e)
+            
         #self.update_lista()
         self.decidir_entradas()
-        if self.escolha_de_filtro.get() == '':
-            self.escolha_de_filtro.set("Nenhum")
+        if self.filtro_interno.get() == '':
+            self.filtro_interno.set("Nenhum")
+        
     def mudar_aba_placeholder(self,event):
         self.mudar_aba()
+        self.filtro_interno.set('Nenhum')
+        self.escolha_do_filtro.set('Nenhum')
         self.update_lista()
         
     def limpar_entradas(self):
@@ -423,8 +407,8 @@ class App:
             baguio = []
             for value in self.minha_arvore.item(item)['values']:
                 if value:
-                    
-                    str(value).strip()
+                    value = str(value)
+                    value.strip()
                     baguio.append(value)
             values.append(tuple(baguio))
         return values
@@ -436,7 +420,7 @@ class App:
     def salvar_arquivo(self):
         #print(f'(NGC BRABOOOOOOOO :{self.salvar_dados_novos()})')
         print('salvando arquivos')
-        print(f'livros: {self.livros}')
+        #print(f'livros: {self.livros}')
         #print(f'autores: {self.autores}')
         #print(f'Livrarias {self.livrarias}')
         
