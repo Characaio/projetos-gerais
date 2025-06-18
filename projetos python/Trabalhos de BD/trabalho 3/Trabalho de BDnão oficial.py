@@ -5,6 +5,7 @@ import os
 # Classe principal da aplicação
 class App:
     def __init__(self, root):
+        
         self.root = root
         self.root.title("Registro de Usuários")  # Título da janela
         for i in range(6):
@@ -25,7 +26,7 @@ class App:
         self.abas = ['Livros','Autores','Livrarias']
         
         self.escolha= {
-            'Livros_info_geral':('Nome do Livro:',"Autor do Livro:","Editora do Livro:","Livraria do Livro:"),
+            'Livros_info_geral':('Nome do Livro:',"Autor do Livro:","Editora do Livro:","Livraria onde se vende:"),
             'Autores_info_geral':("Nome do Autor:","Idade do Autor:","Editora do Autor:","Livros do Autor:"),
             'Editora_info_geral':("Nome da Livraria:","Dono da Livraria:","Telefone da Livraria:","quantidade de livros:")
         }
@@ -36,28 +37,28 @@ class App:
         
 
         # Campo de entrada para o login
-        self.entrada_info1 = tk.Entry(root)
+        self.entrada_info1 = ttk.Entry(root)
         self.entrada_info1.grid(row=0, column=1, padx=5, pady=5)
 
-        self.entrada_info2 = tk.Entry(root)
+        self.entrada_info2 = ttk.Entry(root)
         self.entrada_info2.grid(row=1, column=1, padx=5, pady=5)
         
-        self.entrada_info3 = tk.Entry(root)
+        self.entrada_info3 = ttk.Entry(root)
         self.entrada_info3.grid(row=2, column=1, padx=5, pady=5)
         
-        self.entrada_info4 = tk.Entry(root)
+        self.entrada_info4 = ttk.Entry(root)
         self.entrada_info4.grid(row=3, column=1, padx=5, pady=5)
         
-        self.entrada1 = tk.Label(root, text="")
+        self.entrada1 = ttk.Label(root, text="")
         self.entrada1.grid(row=0, column=0, padx=5, pady=5)
         
-        self.entrada2 = tk.Label(root, text="")
+        self.entrada2 = ttk.Label(root, text="")
         self.entrada2.grid(row=1, column=0, padx=5, pady=5)
         
-        self.entrada3 = tk.Label(root, text="")
+        self.entrada3 = ttk.Label(root, text="")
         self.entrada3.grid(row=2, column=0, padx=5, pady=5)
         
-        self.entrada4 = tk.Label(root, text="")
+        self.entrada4 = ttk.Label(root, text="")
         self.entrada4.grid(row=3, column=0, padx=5, pady=5)
         
         self.entradas = [self.entrada_info1,self.entrada_info2,self.entrada_info3,self.entrada_info4]
@@ -68,28 +69,28 @@ class App:
         self.colunas = self.get_columns()
         
         self.minha_arvore = ttk.Treeview(root,columns=self.colunas,show='headings')
-        self.minha_arvore.bind("<<TreeviewSelect>>",self.socorro)
+        self.minha_arvore.bind("<<TreeviewSelect>>",self.preparo_para_editar)
         self.minha_arvore.bind("<Button-1>",self.verificar_clique)
         self.minha_arvore.grid(row=6,column=0,columnspan=8,sticky='we',padx=5,pady=5)
 
-        self.btn_registrar = tk.Button(root, text="Registrar", command=self.registrar_usuario)
+        self.btn_registrar = ttk.Button(root, text="Registrar", command=self.registrar_usuario)
         self.btn_registrar.grid(row=4, column=0)
         
-        self.btn_apagar_tudo = tk.Button(root, text="apagar tudo", command=self.apagar_tudo)
+        self.btn_apagar_tudo = ttk.Button(root, text="apagar tudo", command=self.apagar_tudo)
         self.btn_apagar_tudo.grid(row=5, column=0)
         
-        self.btn_apagar_item = tk.Button(root,text='apagar item',command=self.deletar_item)
+        self.btn_apagar_item = ttk.Button(root,text='apagar item',command=self.deletar_item)
         self.btn_apagar_item.grid(row=5,column=1,pady=10)
         
-        self.btn_editar_item = tk.Button(root,text='editar item',command=self.editar_item)
+        self.btn_editar_item = ttk.Button(root,text='editar item',command=self.editar_item)
         self.btn_editar_item.grid(row=5,column=2,pady=10)
         
-        self.arquivos_base = tk.Button(root,text='criar arquivos base',command=self.criar_arquivos_base)
+        self.arquivos_base = ttk.Button(root,text='criar arquivos base',command=self.criar_arquivos_base)
         self.arquivos_base.grid(row=5,column=3,pady=10)
         
         self.carregar_dados()
         
-        self.escolha_de_dados_texto = tk.Label(root,text='Aba Escolhida:',justify='right')
+        self.escolha_de_dados_texto = ttk.Label(root,text='Aba Escolhida:',justify='right')
         self.escolha_de_dados_texto.grid(row=3,column=5,sticky='e')
         
         self.escolha_de_dados = ttk.Combobox(root, values=self.abas)
@@ -97,7 +98,7 @@ class App:
         self.escolha_de_dados.set('Livros')
         self.escolha_de_dados.bind("<<ComboboxSelected>>",self.mudar_aba_placeholder)
         
-        self.filtro_interno_texto = tk.Label(root,text='flitrar pelo item:',justify='right')
+        self.filtro_interno_texto = ttk.Label(root,text='flitrar pelo item:',justify='right')
         self.filtro_interno_texto.grid(row=5,column=5,sticky='e')
         
         self.filtro_interno = ttk.Combobox(root, values='Nenhum')
@@ -105,13 +106,15 @@ class App:
         self.filtro_interno.set("Nenhum")
         self.filtro_interno.grid(row=5,column=6,pady=10)
 
-        self.escolha_do_filtro_texto = tk.Label(root,text='Escolha o tipo de filtro')
+        self.escolha_do_filtro_texto = ttk.Label(root,text='Escolha o tipo de filtro')
         self.escolha_do_filtro_texto.grid(row=4,column=5,pady=10,sticky='e')
         
         self.escolha_do_filtro = ttk.Combobox(root)
         self.escolha_do_filtro.bind("<<ComboboxSelected>>",self.mudar_filtro_interno_placeholder)
         self.escolha_do_filtro.set("Nenhum")
         self.escolha_do_filtro.grid(row=4,column=6,pady=10)
+        
+        ttk.Style().theme_use('alt')
         
         self.mudar_aba()
         self.decidir_entradas()
@@ -130,9 +133,10 @@ class App:
             self.update_lista()
             return
         
-        self.indice = self.encontrar_indice_do_filtro()
+        self.encontrar_indice_do_filtro()
 
-        for item in self.extrair_valores_dos_itens():
+        for item in self.extrair_valores_dos_itens(0):
+            
             if item[self.indice] not in temp:
                 temp.append(item[self.indice])
             
@@ -154,7 +158,7 @@ class App:
             self.update_lista()
             return
         
-        valores = self.extrair_valores_dos_itens()
+        valores = self.extrair_valores_dos_itens(0)
         
         # print(f'extrair valores: {valores}')
         # print(f'valor do combobox {valor}')
@@ -186,7 +190,7 @@ class App:
         self.apagar_tudo()
         self.carregar_dados()
         
-    def socorro(self,event):
+    def preparo_para_editar(self,event):
         selecionado = self.minha_arvore.selection()
         if selecionado:
             #print(selecionado)
@@ -201,29 +205,45 @@ class App:
                 entrada.insert(0,isso[i])
             
     def editar_item(self):
-        pass
         #if self.entrada_info1.get() and self.entrada_info2.get() and self.entrada_info3.get() and self.entrada_info4.get():
         selecionado = self.minha_arvore.selection()
         if selecionado:
+            
             print(selecionado)
             valores = self.minha_arvore.item(selecionado)['values']
+            
             print(f'oi: {valores}')
             print(f'get info: {self.get_info()}')
-            self.minha_arvore.item(selecionado[0],values=self.get_info())
+            
+            for info in self.get_info():
+                if info == '':
+                    print("NÃO PODEEEEEEEE")
+                    self.minha_arvore.selection_remove(self.minha_arvore.focus())
+                    self.limpar_entradas()
+                    messagebox.showwarning("Erro", "Algum valor editado esta vazio")
+                    return
+                
+            self.minha_arvore.item(selecionado,values=self.get_info())
+            
+            print(self.minha_arvore.item(selecionado)['values'])
+
             self.limpar_entradas()
             
-            values = self.extrair_valores_dos_itens()
-                
+            values = self.extrair_valores_dos_itens(1)
+
+            print(f'values: {values}')
+            
             if self.aba == 'Livros':
                 self.livros = values
-                print(f'baguio brabasso{self.livros}')
+                #print(f'baguio brabasso{self.livros}')
             if self.aba == 'Autores':
                 self.autores = values
-                print(f'baguio brabasso{self.autores}')
+                #print(f'baguio brabasso{self.autores}')
             if self.aba == 'Livrarias':
                 self.livrarias = values
-                print(f'baguio brabasso{self.livrarias}')
-            #quit()
+                #print(f'baguio brabasso{self.livrarias}')
+            self.minha_arvore.selection_remove(self.minha_arvore.focus())
+        self.salvar_arquivo()
             
     def get_columns(self):
         if self.aba == 'Livros':
@@ -308,7 +328,7 @@ class App:
         if self.aba == 'Livrarias':
             for i in range(len(self.livrarias)):
                 self.minha_arvore.insert('','end',values=self.livrarias[i])
-
+        self.salvar_arquivo()
     def mudar_aba(self):
         print('mudando a aba')
         self.aba = self.escolha_de_dados.get()
@@ -384,7 +404,7 @@ class App:
             self.livrarias.append(item)
 
         self.update_lista()
-
+        self.salvar_arquivo()
         self.limpar_entradas()
     
     
@@ -400,8 +420,9 @@ class App:
                 file.write(temp2 + '\n')
                 
                 
-    def extrair_valores_dos_itens(self):
-        self.update_lista()
+    def extrair_valores_dos_itens(self,tipo):
+        if tipo == 0:
+            self.update_lista()
         values = []
         for item in self.minha_arvore.get_children():
             baguio = []
